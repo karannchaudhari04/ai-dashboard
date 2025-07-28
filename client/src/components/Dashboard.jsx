@@ -1,20 +1,19 @@
-import Topbar from "./Header";
+import Layout from "./Layout";
 
-import Chart1 from '../components/charts/SessionDurationChart';
-import Chart2 from '../components/charts/UserRetentionChart';
-import Chart3 from '../components/charts/TopFeaturesChart';
-import Chart4 from '../components/charts/APIErrorChart';
-import Chart5 from '../components/charts/UserGeoChart';
-import Chart6 from '../components/charts/LineChart';
+import Chart1 from "../components/charts/SessionDurationChart";
+import Chart2 from "../components/charts/UserRetentionChart";
+import Chart3 from "../components/charts/TopFeaturesChart";
+import Chart4 from "../components/charts/APIErrorChart";
+import Chart5 from "../components/charts/UserGeoChart";
+import Chart6 from "../components/charts/LineChart";
 
 export default function Dashboard() {
   return (
-    <div className="flex flex-col min-h-screen bg-[#0f172a] text-white">
-      
+    <Layout>
       {/* Page Content */}
       <main className="flex-1 px-6 py-8 overflow-y-auto">
         {/* Page Header */}
-        <h1 className="text-3xl font-bold mb-8">📊 AI Analytics Dashboard</h1>
+        <h1 className="text-3xl font-bold mb-8 text-white">📊 AI Analytics Dashboard</h1>
 
         {/* Charts Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-6">
@@ -34,7 +33,7 @@ export default function Dashboard() {
             <Chart4 />
           </div>
 
-          {/* Full-Width Row */}
+          {/* Full-Width Rows */}
           <div className="md:col-span-2 bg-[#1e293b] rounded-2xl p-4 shadow-lg">
             <Chart5 />
           </div>
@@ -43,6 +42,6 @@ export default function Dashboard() {
           </div>
         </div>
       </main>
-    </div>
+    </Layout>
   );
 }

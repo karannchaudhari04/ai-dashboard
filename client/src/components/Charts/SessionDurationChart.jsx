@@ -4,18 +4,18 @@ import API from "../../utils/axiosInstance";
 
 const SessionDurationChart = () => {
   const [data, setData] = useState(null);
+  const [error, setError] = useState(false); // new state
 
   useEffect(() => {
     API.get("/analytics/session-duration")
       .then((res) => setData(res.data))
       .catch((err) => {
-        if (err.response.status === 401) {
-          localStorage.removeItem("token");
-          window.location.href = "/login";
-        }
+        console.error("Chart error:", err?.response || err);
+        setError(true); // just show error in chart, no logout
       });
   }, []);
 
+  if (error) return <div className="text-red-500">⚠️ Failed to load chart</div>;
   if (!data) return <div>Loading...</div>;
 
   return <Line data={data.chartData} options={data.options} />;
