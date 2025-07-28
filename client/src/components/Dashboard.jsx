@@ -1,4 +1,4 @@
-import Topbar from "../components/Navbar";
+import Topbar from "./Header";
 
 import Chart1 from '../components/charts/SessionDurationChart';
 import Chart2 from '../components/charts/UserRetentionChart';
@@ -10,9 +10,7 @@ import Chart6 from '../components/charts/LineChart';
 export default function Dashboard() {
   return (
     <div className="flex flex-col min-h-screen bg-[#0f172a] text-white">
-      {/* Topbar */}
-      <Topbar />
-
+      
       {/* Page Content */}
       <main className="flex-1 px-6 py-8 overflow-y-auto">
         {/* Page Header */}

@@ -1,4 +1,5 @@
 import { Doughnut } from 'react-chartjs-2';
+import API from "../../utils/axiosInstance";
 const TopFeaturesChart = () => {
   const data = {
     labels: ['Text Gen', 'Image Gen', 'Summarizer', 'Chatbot', 'Code Gen'],
