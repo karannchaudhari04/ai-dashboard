@@ -11,16 +11,24 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5050;
 
-// Middleware
-app.use(cors());
+// ✅ CORS Configuration
+app.use(
+  cors({
+    origin: "http://localhost:5173", // 👈 Frontend origin
+    credentials: true,               // 👈 Allow cookies / JWT / auth headers
+  })
+);
+
+// ✅ Body Parser Middleware
 app.use(express.json());
 
-// Routes
+// ✅ Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/analytics", analyticsRoutes);
 
-// Connect to MongoDB and start HTTP server
-mongoose.connect(process.env.MONGO_URI)
+// ✅ Connect to MongoDB and Start Server
+mongoose
+  .connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     console.log("✅ MongoDB connected");
     app.listen(PORT, () => {

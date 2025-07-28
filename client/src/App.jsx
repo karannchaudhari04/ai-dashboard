@@ -1,24 +1,27 @@
-import { useState } from "react";
-import Sidebar from "./components/Sidebar";
-import Header from "./components/Header";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import Login from "./components/auth/Login";
+import Signup from "./components/auth/Signup";
 import Dashboard from "./components/Dashboard";
-import Layout from "./components/Layout";
-import Analytics from "./components/Analytics";
+import ProtectedRoute from "./components/auth/ProtectedRoute"; // path depends on your structure
 
-function App() {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-
+export default function App() {
   return (
-    <div className="flex h-screen bg-gray-900 text-white">
-      <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-      <div className="flex-1 flex flex-col">
-        <Header setSidebarOpen={setSidebarOpen} />
-        <main className="p-4 sm:p-6 overflow-auto">
-          <Dashboard />
-        </main>
-      </div>
+    <div className="min-h-screen bg-gray-900 text-white font-sans">
+      <Router>
+        <Routes>
+          <Route path="/" element={<Navigate to="/login" />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+      </Router>
     </div>
   );
 }
-
-export default App;
