@@ -1,8 +1,17 @@
-export default function Header() {
+import { Menu } from "lucide-react"; // Install with: npm install lucide-react
+
+const Header = ({ setSidebarOpen }) => {
   return (
-    <header className="bg-white shadow-md p-4 flex justify-between items-center">
-      <h1 className="text-2xl font-semibold">Dashboard Overview</h1>
-      <div className="text-gray-600">👤 Admin</div>
+    <header className="flex items-center justify-between px-4 py-3 bg-gray-800 shadow md:shadow-none md:px-6">
+      <button
+        className="text-gray-200 md:hidden"
+        onClick={() => setSidebarOpen((prev) => !prev)}
+      >
+        <Menu size={24} />
+      </button>
+      <h1 className="text-lg font-semibold">Dashboard</h1>
     </header>
   );
-}
+};
+
+export default Header;
