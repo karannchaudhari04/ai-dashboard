@@ -1,10 +1,7 @@
 // utils/axiosInstance.js
 import axios from "axios";
 
-// Automatically switch between dev and production
-const BASE_URL = import.meta.env.MODE === "development"
-  ? "http://localhost:5050/api" // Local development URL
-  : import.meta.env.VITE_API_BASE_URL; // 👈 safer for deployment flexibility
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const API = axios.create({
   baseURL: BASE_URL,
