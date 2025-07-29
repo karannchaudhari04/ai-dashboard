@@ -18,6 +18,5 @@ export default {
   plugins: [
     require('@tailwindcss/forms'),       // For better styled form elements
     require('@tailwindcss/typography'),  // For prose formatting
-    require('@tailwindcss/line-clamp'),  // For truncating text
   ],
 };
