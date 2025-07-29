@@ -5,7 +5,6 @@ import cors from "cors";
 
 
 dotenv.config();
-console.log("JWT_SECRET Loaded:", process.env.JWT_SECRET);
 
 import authRoutes from "./routes/auth.js";
 import analyticsRoutes from "./routes/analytics.js";

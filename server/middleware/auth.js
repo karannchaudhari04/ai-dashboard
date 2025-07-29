@@ -21,7 +21,6 @@ export const verifyToken = (req, res, next) => {
     return res.status(401).json({ msg: "Invalid or expired token" });
   }
 };
-console.log("JWT_SECRET Loaded:", process.env.JWT_SECRET);
 export const requireAdmin = (req, res, next) => {
   if (req.user?.role !== "admin") {
     return res.status(403).json({ msg: "Access denied. Admins only." });
