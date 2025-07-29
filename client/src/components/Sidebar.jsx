@@ -1,9 +1,6 @@
-import { Home, BarChart, Users, Settings, LogOut, Menu } from "lucide-react";
-import { useState } from "react";
+import { Home, BarChart, Users, Settings, LogOut } from "lucide-react";
 
-const Sidebar = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-
+const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
   const menuItems = [
     { name: "Overview", icon: <Home />, href: "#" },
     { name: "Analytics", icon: <BarChart />, href: "#" },
@@ -13,43 +10,33 @@ const Sidebar = () => {
 
   return (
     <>
-      {/* Hamburger for mobile */}
-      <div className="md:hidden flex items-center justify-between bg-gray-900 text-white p-4 shadow">
-        <div className="text-xl font-bold">AI Analytics</div>
-        <button onClick={() => setSidebarOpen(true)}>
-          <Menu size={24} />
-        </button>
-      </div>
-
-      {/* Overlay */}
+      {/* Mobile Overlay */}
       <div
-        className={`fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden transition-opacity duration-300 ${
+        className={`fixed inset-0 z-40 bg-black bg-opacity-50 md:hidden ${
           sidebarOpen ? "block" : "hidden"
         }`}
         onClick={() => setSidebarOpen(false)}
-      ></div>
+      />
 
-      {/* Sidebar Panel */}
       <aside
-        className={`fixed z-50 top-0 left-0 w-64 h-screen bg-gray-900 text-gray-100 shadow-lg transform transition-transform duration-300 ease-in-out
+        className={`fixed top-0 left-0 z-50 w-64 h-screen bg-gray-900 text-white transform transition-transform duration-300 ease-in-out
         ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
         md:translate-x-0 md:static md:block`}
       >
-        <div className="flex flex-col justify-between h-screen">
-          {/* Logo + Nav */}
+        <div className="flex flex-col justify-between h-full">
           <div>
             {/* Logo */}
-            <div className="p-6 text-2xl font-extrabold tracking-tight flex items-center gap-2">
-              <span>🔍</span> <span>AI Analytics</span>
+            <div className="p-6 text-2xl font-extrabold flex items-center gap-2">
+              <span>🔍</span> AI Analytics
             </div>
 
-            {/* Nav Items */}
-            <nav className="mt-4 space-y-1 px-4">
+            {/* Navigation */}
+            <nav className="mt-4 px-4 space-y-1">
               {menuItems.map((item) => (
                 <a
                   key={item.name}
                   href={item.href}
-                  className="flex items-center gap-3 py-2 px-3 rounded-lg text-sm hover:bg-gray-800 transition-colors"
+                  className="flex items-center gap-3 py-2 px-3 rounded-lg text-sm hover:bg-gray-800 transition"
                 >
                   {item.icon}
                   <span>{item.name}</span>
@@ -59,10 +46,10 @@ const Sidebar = () => {
           </div>
 
           {/* Logout Button */}
-          <div className="p-6">
+          <div className="p-6 border-t border-gray-700">
             <a
               href="#"
-              className="flex items-center gap-3 text-red-400 hover:text-red-300 transition-colors"
+              className="flex items-center gap-3 text-red-400 hover:text-red-300"
             >
               <LogOut size={18} />
               <span>Logout</span>
