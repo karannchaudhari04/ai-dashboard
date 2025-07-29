@@ -11,7 +11,10 @@ const app = express();
 
 // 4. Setup CORS middleware (⬇️ ADD THIS HERE)
 app.use(cors({
-  origin: ["http://localhost:5173", "https://ai-dashboard-nine-topaz.vercel.app/"],
+  origin: [
+    "http://localhost:5173",
+    "https://ai-dashboard-nine-topaz.vercel.app"
+  ],
   credentials: true,
 }));
 
