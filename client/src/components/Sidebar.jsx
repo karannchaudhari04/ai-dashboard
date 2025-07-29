@@ -1,12 +1,17 @@
-// Sidebar.jsx
 import { Home, BarChart, Users, Settings, LogOut } from "lucide-react";
-import { NavLink, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { logoutUser } from "../utils/logout";
-
+import { useNavigate } from "react-router-dom";
 
 const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // ✅ For navigation on logout
+
+  const menuItems = [
+    { name: "Overview", icon: <Home />, href: "/dashboard/overview" },
+    { name: "Analytics", icon: <BarChart />, href: "/dashboard/analytics" },
+    { name: "Users", icon: <Users />, href: "/dashboard/users" },
+    { name: "Settings", icon: <Settings />, href: "/dashboard/settings" },
+  ];
 
   return (
     <>
@@ -33,19 +38,14 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
             {/* Navigation */}
             <nav className="mt-4 px-4 space-y-1">
               {menuItems.map((item) => (
-                <NavLink
+                <a
                   key={item.name}
-                  to={item.path}
-                  className={({ isActive }) =>
-                    `flex items-center gap-3 py-2 px-3 rounded-lg text-sm transition ${
-                      isActive ? "bg-gray-800 text-white" : "text-gray-300 hover:bg-gray-800"
-                    }`
-                  }
-                  onClick={() => setSidebarOpen(false)} // close sidebar on mobile
+                  href={item.href}
+                  className="flex items-center gap-3 py-2 px-3 rounded-lg text-sm hover:bg-gray-800 transition"
                 >
                   {item.icon}
                   <span>{item.name}</span>
-                </NavLink>
+                </a>
               ))}
             </nav>
           </div>
@@ -54,7 +54,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
           <div className="p-6 border-t border-gray-700">
             <button
               className="w-full text-left px-4 py-2 hover:bg-gray-700 text-red-400 flex items-center gap-2"
-              onClick={() => logoutUser(navigate, toast)}
+              onClick={() => logoutUser(navigate, toast)} // ✅ works as before
             >
               <LogOut size={16} /> Logout
             </button>
