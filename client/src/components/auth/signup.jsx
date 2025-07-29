@@ -20,15 +20,15 @@ const Signup = () => {
         password,
       });
 
-      toast.success("Signup successful! Please login.", { autoClose: 2000 });
+      toast.success("Signup successful! Please login.", { autoClose: 1000 });
 
       // Wait 2 seconds then redirect to login
       setTimeout(() => {
         navigate("/login");
-      }, 2000);
+      }, 1000);
     } catch (err) {
       const errorMsg = err.response?.data?.message || "Signup failed!";
-      toast.error(errorMsg, { autoClose: 2000 });
+      toast.error(errorMsg, { autoClose: 1000 });
     }
   };
 

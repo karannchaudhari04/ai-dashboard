@@ -4,6 +4,10 @@ import Signup from "./components/auth/signup";
 import Dashboard from "./components/Dashboard";
 import ProtectedRoute from "./components/auth/ProtectedRoute"; // path depends on your structure
 import { ToastContainer } from "react-toastify";
+import Overview from "./pages/Overview"; // Example page, adjust as needed
+import Analytics from "./pages/Analytics"; // Example page, adjust as needed
+import Users from "./pages/Users"; // Example page, adjust as needed
+import Settings from "./pages/Settings"; // Example page, adjust as needed
 
 
 export default function App() {
@@ -20,6 +24,30 @@ export default function App() {
               <ProtectedRoute>
                 <Dashboard />
               </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/pages/Overview"
+            element={
+                <Overview />
+            }
+          />
+          <Route
+            path="/pages/Analytics"
+            element={
+                <Analytics />
+            }
+          />
+          <Route
+            path="/pages/Users"
+            element={
+                <Users />
+            }
+          />
+          <Route
+            path="/pages/Settings"
+            element={
+                <Settings />
             }
           />
         </Routes>

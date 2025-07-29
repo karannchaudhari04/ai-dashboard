@@ -21,19 +21,19 @@ const Login = () => {
       localStorage.setItem("token", res.data.token); // Save token
 
       toast.success("Login successful!", {
-        autoClose: 2000,
+        autoClose: 1000,
         position: "top-right",
       });
 
       setTimeout(() => {
         navigate("/dashboard");
-      }, 2000); // wait for toast
+      }, 1000); // wait for toast
     } catch (err) {
       const errorMsg =
         err.response?.data?.message || "Login failed. Please try again.";
 
       toast.error(errorMsg, {
-        autoClose: 2000,
+        autoClose: 1000,
         position: "top-right",
       });
     }
