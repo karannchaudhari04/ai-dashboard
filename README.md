@@ -13,7 +13,7 @@ A sleek, full-stack AI-powered analytics dashboard built using **React**, **Tail
 |------|---------|
 | **ChatGPT** | Generated reusable UI components, backend logic, prompts & bug fixes |
 | **GitHub Copilot** | Assisted with boilerplate code and auto-completions |
-| *(Optional)* Figma AI | UI wireframe inspiration and layout planning |
+| **Figma AI** | UI wireframe inspiration and layout planning |
 
 ---
 
@@ -40,7 +40,7 @@ A sleek, full-stack AI-powered analytics dashboard built using **React**, **Tail
 ## 📊 Key Features
 
 - 🔐 **Secure Authentication** – Signup/Login with JWT tokens
-- 👤 **Admin/User Role-Based Access** – Protected analytics routes
+- 👤 **Admin Access** – Protected analytics routes
 - 📈 **Real-Time Analytics Dashboard**:
   - 📦 Inventory Utilization
   - 📣 Campaign Engagement
