@@ -1,6 +1,6 @@
 # 🧠 AI-Powered Analytics Dashboard
 
-A sleek, full-stack AI-powered analytics dashboard built using **React**, **Tailwind CSS**, **Chart.js**, **Node.js**, and **MongoDB Atlas**. It features **JWT-authenticated login**, **role-based access control**, and **admin-only analytics endpoints**—all visualized using interactive charts for real-time insights.
+A sleek, full-stack AI-powered analytics dashboard built using **React**, **Tailwind CSS**, **Chart.js**, **Node.js**, and **MongoDB Atlas**. It features **JWT-authenticated login**, **Admin access control**, and **admin-only analytics endpoints**—all visualized using interactive charts for real-time insights.
 
 ## 🌐 Live Demo
 🔗 [Click here to view the live demo](https://ai-dashboard-nine-topaz.vercel.app/)  
