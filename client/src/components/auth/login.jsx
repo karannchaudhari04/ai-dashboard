@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import API from "../../utils/axiosInstance"; // ✅ your custom axios instance
 
 const Login = () => {
@@ -12,15 +14,28 @@ const Login = () => {
 
     try {
       const res = await API.post("/auth/login", {
-        email: email.toLowerCase(), // ✅ normalize email
+        email: email.toLowerCase(),
         password,
       });
 
       localStorage.setItem("token", res.data.token); // Save token
-      navigate("/dashboard"); // Redirect
+
+      toast.success("Login successful!", {
+        autoClose: 2000,
+        position: "top-right",
+      });
+
+      setTimeout(() => {
+        navigate("/dashboard");
+      }, 2000); // wait for toast
     } catch (err) {
-      console.error("Login error:", err.response?.data || err.message);
-      alert("Invalid credentials. Try again!");
+      const errorMsg =
+        err.response?.data?.message || "Login failed. Please try again.";
+
+      toast.error(errorMsg, {
+        autoClose: 2000,
+        position: "top-right",
+      });
     }
   };
 

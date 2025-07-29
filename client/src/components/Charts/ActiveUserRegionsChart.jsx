@@ -9,7 +9,7 @@ const ActiveUserRegionsChart = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get("/analytics/active-user-regions");
+        const res = await axios.get("/analytics/active-users-regions");
         setChartData(res.data.chartData);
       } catch (err) {
         console.error("Failed to fetch region data", err);

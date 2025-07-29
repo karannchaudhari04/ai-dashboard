@@ -105,22 +105,39 @@ router.get("/viewability-fraud", verifyToken, requireAdmin, async (req, res) => 
  * @route GET /api/analytics/active-user-regions
  * @desc Get Active User Distribution by Region
  */
-router.get("/active-user-regions", verifyToken, requireAdmin, async (req, res) => {
+// GET /analytics/active-users
+router.get("/active-users-regions", verifyToken, requireAdmin, async (req, res) => {
   try {
     const chartData = {
-      labels: ["North", "South", "East", "West", "Central"],
+      labels: [
+        "United States",
+        "India",
+        "China",
+        "Japan",
+        "United Kingdom",
+        "Singapore",
+        "Malaysia"
+      ],
       datasets: [
         {
           label: "Active Users",
-          data: [3200, 4100, 2300, 3700, 2900],
-          backgroundColor: ["#3B82F6", "#10B981", "#F59E0B", "#EF4444", "#6366F1"],
-        },
-      ],
+          data: [5400, 8200, 7300, 3200, 4100, 1800, 2500], // Simulated values
+          backgroundColor: [
+            "#3B82F6", // US
+            "#10B981", // India
+            "#F59E0B", // China
+            "#EF4444", // Japan
+            "#6366F1", // UK
+            "#14B8A6", // Singapore
+            "#8B5CF6"  // Malaysia
+          ]
+        }
+      ]
     };
-    res.status(200).json({ chartData, options: {} });
+
+    res.status(200).json({ chartData });
   } catch (error) {
-    console.error("Active User Regions Error:", error.message);
-    res.status(500).json({ error: "Failed to fetch regional user data" });
+    res.status(500).json({ error: "Failed to fetch active user data" });
   }
 });
 

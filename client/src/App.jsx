@@ -3,6 +3,8 @@ import Login from "./components/auth/login";
 import Signup from "./components/auth/signup";
 import Dashboard from "./components/Dashboard";
 import ProtectedRoute from "./components/auth/ProtectedRoute"; // path depends on your structure
+import { ToastContainer } from "react-toastify";
+
 
 export default function App() {
   return (
@@ -22,6 +24,7 @@ export default function App() {
           />
         </Routes>
       </Router>
+      <ToastContainer />
     </div>
   );
 }

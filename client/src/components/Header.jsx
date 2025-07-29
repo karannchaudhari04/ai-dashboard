@@ -37,7 +37,7 @@ const Header = ({ setSidebarOpen }) => {
             alt="avatar"
             className="w-9 h-9 rounded-full border-2 border-gray-700"
           />
-          <div className="hidden md:block text-left">
+          <div className="block text-left">
             <div className="text-sm font-medium text-white">{userName}</div>
             <div className="text-xs text-gray-300 capitalize">{userRole}</div>
           </div>

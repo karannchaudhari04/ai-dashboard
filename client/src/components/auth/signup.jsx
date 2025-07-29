@@ -1,38 +1,34 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import API from "../../utils/axiosInstance";
+import API from "../../utils/axiosInstance"; // ✅ axios instance
+import { toast } from "react-toastify"; // ✅ import toast
+import "react-toastify/dist/ReactToastify.css"; // ✅ ensure styles are included
 
 const Signup = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-  });
-
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
-
-  const handleChange = (e) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
-  };
 
   const handleSignup = async (e) => {
     e.preventDefault();
 
     try {
       const res = await API.post("/auth/signup", {
-        name: formData.name.trim(),
-        email: formData.email.toLowerCase(),
-        password: formData.password,
+        name,
+        email: email.toLowerCase(),
+        password,
       });
 
-      localStorage.setItem("token", res.data.token);
-      navigate("/dashboard");
+      toast.success("Signup successful! Please login.", { autoClose: 2000 });
+
+      // Wait 2 seconds then redirect to login
+      setTimeout(() => {
+        navigate("/login");
+      }, 2000);
     } catch (err) {
-      console.error("Signup error:", err.response?.data || err.message);
-      alert("Signup failed. Try again!");
+      const errorMsg = err.response?.data?.message || "Signup failed!";
+      toast.error(errorMsg, { autoClose: 2000 });
     }
   };
 
@@ -43,29 +39,26 @@ const Signup = () => {
         <form onSubmit={handleSignup} className="space-y-4">
           <input
             type="text"
-            name="name"
-            placeholder="Full Name"
+            placeholder="Name"
             className="w-full px-4 py-2 rounded-md bg-gray-800 border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
-            value={formData.name}
-            onChange={handleChange}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
             required
           />
           <input
             type="email"
-            name="email"
             placeholder="Email"
             className="w-full px-4 py-2 rounded-md bg-gray-800 border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
-            value={formData.email}
-            onChange={handleChange}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             required
           />
           <input
             type="password"
-            name="password"
             placeholder="Password"
             className="w-full px-4 py-2 rounded-md bg-gray-800 border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
-            value={formData.password}
-            onChange={handleChange}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             required
           />
           <button
@@ -81,7 +74,7 @@ const Signup = () => {
             className="text-purple-400 hover:underline cursor-pointer"
             onClick={() => navigate("/login")}
           >
-            Log in
+            Login
           </span>
         </p>
       </div>
