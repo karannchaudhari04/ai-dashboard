@@ -1,29 +1,17 @@
 import { Bell, Settings, LogOut, User, Menu } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { logoutUser } from "../utils/logout";
+import useUserStore from "../store/useAuthStore";
 
 const Header = ({ setSidebarOpen }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [userName, setUserName] = useState("Admin");
-
   const navigate = useNavigate();
 
-  // ✅ Get name from localStorage token
-  useEffect(() => {
-    const userInfo = localStorage.getItem("userInfo");
-    if (userInfo) {
-      try {
-        const user = JSON.parse(userInfo);
-        if (user?.name) {
-          setUserName(user.name);
-        }
-      } catch (error) {
-        console.error("Failed to parse user info:", error);
-      }
-    }
-  }, []);
+  const { user } = useUserStore();
+  const userName = user?.name || "Admin";
+  const userRole = user?.role || "admin";
 
   return (
     <header className="bg-gray-900 px-6 py-3 flex justify-between items-center sticky top-0 z-30 shadow-md">
@@ -51,7 +39,7 @@ const Header = ({ setSidebarOpen }) => {
           />
           <div className="hidden md:block text-left">
             <div className="text-sm font-medium text-white">{userName}</div>
-            <div className="text-xs text-gray-300">Administrator</div>
+            <div className="text-xs text-gray-300 capitalize">{userRole}</div>
           </div>
         </button>
 

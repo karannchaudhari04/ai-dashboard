@@ -1,74 +1,84 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import API from "../../utils/axiosInstance";
+import axios from "axios";
+import useAuthStore from "../../store/useAuthStore";
 
 const Signup = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const setUser = useAuthStore((state) => state.setUser);
 
-  const handleSignup = async (e) => {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+
+  const [error, setError] = useState("");
+
+  const handleChange = (e) => {
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
+
     try {
-      const response = await API.post("/auth/signup", { name, email, password });
+      const { data } = await axios.post(
+        "http://localhost:5050/api/auth/signup",
+        formData
+      );
 
-      const userData = response.data.user;
-      localStorage.setItem("userInfo", JSON.stringify(res.data));
-      console.log(JSON.parse(localStorage.getItem("userInfo"))); // ✅ STORE USER INFO
+      // ✅ Store user in Zustand
+      setUser(data.user);
 
-      alert("Account created. Please login!");
-      navigate("/login");
+      // ✅ Redirect to dashboard
+      navigate("/dashboard");
     } catch (err) {
-      alert(err?.response?.data?.message || "Something went wrong. Try again!");
+      setError(err.response?.data?.message || "Signup failed");
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-950 text-white flex items-center justify-center px-4">
-      <div className="bg-gray-900 p-8 rounded-md shadow-lg w-full max-w-md">
-        <h2 className="text-3xl font-semibold text-center mb-6">Sign Up</h2>
-        <form onSubmit={handleSignup} className="space-y-4">
+    <div className="min-h-screen flex items-center justify-center bg-[#0e1015] px-4">
+      <div className="bg-[#1a1d23] p-8 rounded-xl shadow-md w-full max-w-md">
+        <h2 className="text-3xl font-bold text-white mb-6 text-center">Sign Up</h2>
+        <form onSubmit={handleSubmit} className="space-y-5">
           <input
             type="text"
+            name="name"
             placeholder="Name"
-            className="w-full px-4 py-2 rounded-md bg-gray-800 border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={handleChange}
             required
+            className="w-full px-4 py-2 rounded-md bg-[#2a2e36] text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           <input
             type="email"
+            name="email"
             placeholder="Email"
-            className="w-full px-4 py-2 rounded-md bg-gray-800 border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={handleChange}
             required
+            className="w-full px-4 py-2 rounded-md bg-[#2a2e36] text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           <input
             type="password"
+            name="password"
             placeholder="Password"
-            className="w-full px-4 py-2 rounded-md bg-gray-800 border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={handleChange}
             required
+            className="w-full px-4 py-2 rounded-md bg-[#2a2e36] text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           <button
             type="submit"
-            className="w-full py-2 bg-purple-600 hover:bg-purple-700 transition rounded-md font-medium"
+            className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-md transition"
           >
-            Sign Up
+            Create Account
           </button>
+          {error && <p className="text-red-500 text-sm">{error}</p>}
         </form>
-        <p className="text-sm mt-4 text-center text-gray-400">
-          Already have an account?{" "}
-          <span
-            className="text-purple-400 hover:underline cursor-pointer"
-            onClick={() => navigate("/login")}
-          >
-            Login
-          </span>
-        </p>
       </div>
     </div>
   );
