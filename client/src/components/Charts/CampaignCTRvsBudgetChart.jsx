@@ -23,10 +23,10 @@ const CampaignCTRvsBudgetChart = () => {
   return (
     <div className="bg-white p-4 rounded-2xl shadow-md w-full h-full">
           <h2 className="text-xl font-semibold text-gray-800 mb-1">
-            Ad Inventory Utilization
+            Campaign CTR vs Budget
           </h2>
           <p className="text-sm text-gray-500 mb-4">
-            Percentage utilization of various advertising channels.
+            CTR performance against allocated budget for each campaign.
           </p>
           <Line data={chartData}/>
         </div>

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import API from "../../utils/axiosInstance";
 
 const Signup = () => {
-  const [name, setName] = useState(""); // ✅ ADD THIS
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -11,7 +11,12 @@ const Signup = () => {
   const handleSignup = async (e) => {
     e.preventDefault();
     try {
-      await API.post("/auth/signup", { name, email, password }); // ✅ ADD name
+      const response = await API.post("/auth/signup", { name, email, password });
+
+      const userData = response.data.user;
+      localStorage.setItem("userInfo", JSON.stringify(res.data));
+      console.log(JSON.parse(localStorage.getItem("userInfo"))); // ✅ STORE USER INFO
+
       alert("Account created. Please login!");
       navigate("/login");
     } catch (err) {

@@ -23,10 +23,10 @@ const ActiveUserRegionsChart = () => {
   return (
     <div className="bg-white p-4 rounded-2xl shadow-md w-full h-full">
           <h2 className="text-xl font-semibold text-gray-800 mb-1">
-            Ad Inventory Utilization
+            Active User Regions
           </h2>
           <p className="text-sm text-gray-500 mb-4">
-            Percentage utilization of various advertising channels.
+            Heatmap of top regions with the most active users.
           </p>
           <Doughnut data={chartData}/>
         </div>

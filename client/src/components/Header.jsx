@@ -1,24 +1,34 @@
 import { Bell, Settings, LogOut, User, Menu } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { logoutUser } from "../utils/logout";
 
 const Header = ({ setSidebarOpen }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [userName, setUserName] = useState("Admin");
+
   const navigate = useNavigate();
 
-  const user = {
-    name: "Admin User",
-    role: "Administrator",
-    avatar: "https://i.pravatar.cc/150?img=12",
-  };
+  // ✅ Get name from localStorage token
+  useEffect(() => {
+    const userInfo = localStorage.getItem("userInfo");
+    if (userInfo) {
+      try {
+        const user = JSON.parse(userInfo);
+        if (user?.name) {
+          setUserName(user.name);
+        }
+      } catch (error) {
+        console.error("Failed to parse user info:", error);
+      }
+    }
+  }, []);
 
   return (
     <header className="bg-gray-900 px-6 py-3 flex justify-between items-center sticky top-0 z-30 shadow-md">
       {/* Left - Hamburger + Title */}
       <div className="flex items-center gap-4">
-        {/* Hamburger for Mobile */}
         <button
           onClick={() => setSidebarOpen(true)}
           className="text-white md:hidden"
@@ -35,13 +45,13 @@ const Header = ({ setSidebarOpen }) => {
           onClick={() => setDropdownOpen(!dropdownOpen)}
         >
           <img
-            src={user.avatar}
+            src="https://i.pravatar.cc/150?img=12"
             alt="avatar"
             className="w-9 h-9 rounded-full border-2 border-gray-700"
           />
           <div className="hidden md:block text-left">
-            <div className="text-sm font-medium text-white">{user.name}</div>
-            <div className="text-xs text-gray-300">{user.role}</div>
+            <div className="text-sm font-medium text-white">{userName}</div>
+            <div className="text-xs text-gray-300">Administrator</div>
           </div>
         </button>
 
@@ -50,20 +60,14 @@ const Header = ({ setSidebarOpen }) => {
           <div className="absolute right-0 mt-2 w-48 bg-gray-800 rounded-lg shadow-lg border border-gray-700 text-sm z-50">
             <button
               className="w-full text-left px-4 py-2 hover:bg-gray-700 text-white flex items-center gap-2"
-              onClick={() => {
-                setDropdownOpen(false);
-                // Add your profile click logic here
-              }}
+              onClick={() => setDropdownOpen(false)}
             >
               <User size={16} /> Profile
             </button>
 
             <button
               className="w-full text-left px-4 py-2 hover:bg-gray-700 text-white flex items-center gap-2"
-              onClick={() => {
-                setDropdownOpen(false);
-                // Add your settings click logic here
-              }}
+              onClick={() => setDropdownOpen(false)}
             >
               <Settings size={16} /> Settings
             </button>

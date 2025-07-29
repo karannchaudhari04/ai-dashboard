@@ -12,11 +12,20 @@ export const signup = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = await User.create({ name, email, password: hashedPassword, role });
 
-    const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: "24h" });
+    // ❌ BUG: you used `user._id` and `user.role` (but no such variable)
+    // ✅ FIX: use `newUser`
+    const token = jwt.sign({ id: newUser._id, role: newUser.role }, process.env.JWT_SECRET, {
+      expiresIn: "24h",
+    });
 
     res.status(201).json({
       token,
-      user: { name: newUser.name, email: newUser.email, role: newUser.role }
+      user: {
+        _id: newUser._id,
+        name: newUser.name,
+        email: newUser.email,
+        role: newUser.role,
+      },
     });
   } catch (err) {
     res.status(500).json({ message: err.message });
