@@ -1,12 +1,12 @@
+// Sidebar.jsx
 import { Home, BarChart, Users, Settings, LogOut } from "lucide-react";
+import { NavLink, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { logoutUser } from "../utils/logout";
+
 
 const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
-  const menuItems = [
-    { name: "Overview", icon: <Home />, href: "#" },
-    { name: "Analytics", icon: <BarChart />, href: "#" },
-    { name: "Users", icon: <Users />, href: "#" },
-    { name: "Settings", icon: <Settings />, href: "#" },
-  ];
+  const navigate = useNavigate();
 
   return (
     <>
@@ -33,27 +33,31 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
             {/* Navigation */}
             <nav className="mt-4 px-4 space-y-1">
               {menuItems.map((item) => (
-                <a
+                <NavLink
                   key={item.name}
-                  href={item.href}
-                  className="flex items-center gap-3 py-2 px-3 rounded-lg text-sm hover:bg-gray-800 transition"
+                  to={item.path}
+                  className={({ isActive }) =>
+                    `flex items-center gap-3 py-2 px-3 rounded-lg text-sm transition ${
+                      isActive ? "bg-gray-800 text-white" : "text-gray-300 hover:bg-gray-800"
+                    }`
+                  }
+                  onClick={() => setSidebarOpen(false)} // close sidebar on mobile
                 >
                   {item.icon}
                   <span>{item.name}</span>
-                </a>
+                </NavLink>
               ))}
             </nav>
           </div>
 
           {/* Logout Button */}
           <div className="p-6 border-t border-gray-700">
-            <a
-              href="#"
-              className="flex items-center gap-3 text-red-400 hover:text-red-300"
+            <button
+              className="w-full text-left px-4 py-2 hover:bg-gray-700 text-red-400 flex items-center gap-2"
+              onClick={() => logoutUser(navigate, toast)}
             >
-              <LogOut size={18} />
-              <span>Logout</span>
-            </a>
+              <LogOut size={16} /> Logout
+            </button>
           </div>
         </div>
       </aside>

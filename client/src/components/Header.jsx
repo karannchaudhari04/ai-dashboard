@@ -1,8 +1,12 @@
 import { Bell, Settings, LogOut, User, Menu } from "lucide-react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { logoutUser } from "../utils/logout";
 
 const Header = ({ setSidebarOpen }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const navigate = useNavigate();
 
   const user = {
     name: "Admin User",
@@ -44,25 +48,37 @@ const Header = ({ setSidebarOpen }) => {
         {/* Dropdown */}
         {dropdownOpen && (
           <div className="absolute right-0 mt-2 w-48 bg-gray-800 rounded-lg shadow-lg border border-gray-700 text-sm z-50">
-            <a
-              href="#"
-              className="block px-4 py-2 hover:bg-gray-700 text-white flex items-center gap-2"
+            <button
+              className="w-full text-left px-4 py-2 hover:bg-gray-700 text-white flex items-center gap-2"
+              onClick={() => {
+                setDropdownOpen(false);
+                // Add your profile click logic here
+              }}
             >
               <User size={16} /> Profile
-            </a>
-            <a
-              href="#"
-              className="block px-4 py-2 hover:bg-gray-700 text-white flex items-center gap-2"
+            </button>
+
+            <button
+              className="w-full text-left px-4 py-2 hover:bg-gray-700 text-white flex items-center gap-2"
+              onClick={() => {
+                setDropdownOpen(false);
+                // Add your settings click logic here
+              }}
             >
               <Settings size={16} /> Settings
-            </a>
+            </button>
+
             <hr className="border-gray-600" />
-            <a
-              href="#"
-              className="block px-4 py-2 hover:bg-gray-700 text-red-400 flex items-center gap-2"
+
+            <button
+              className="w-full text-left px-4 py-2 hover:bg-gray-700 text-red-400 flex items-center gap-2"
+              onClick={() => {
+                setDropdownOpen(false);
+                logoutUser(navigate, toast);
+              }}
             >
               <LogOut size={16} /> Logout
-            </a>
+            </button>
           </div>
         )}
       </div>
