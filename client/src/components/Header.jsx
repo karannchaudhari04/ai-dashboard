@@ -1,7 +1,7 @@
-import { Bell, Settings, LogOut, User } from "lucide-react";
+import { Bell, Settings, LogOut, User, Menu } from "lucide-react";
 import { useState } from "react";
 
-const Header = () => {
+const Header = ({ setSidebarOpen }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const user = {
@@ -12,8 +12,17 @@ const Header = () => {
 
   return (
     <header className="bg-gray-900 px-6 py-3 flex justify-between items-center sticky top-0 z-30 shadow-md">
-      {/* Left - Title */}
-      <div className="text-xl font-semibold text-white">Dashboard</div>
+      {/* Left - Hamburger + Title */}
+      <div className="flex items-center gap-4">
+        {/* Hamburger for Mobile */}
+        <button
+          onClick={() => setSidebarOpen(true)}
+          className="text-white md:hidden"
+        >
+          <Menu size={24} />
+        </button>
+        <div className="text-xl font-semibold text-white">Dashboard</div>
+      </div>
 
       {/* Right - Profile */}
       <div className="relative">
