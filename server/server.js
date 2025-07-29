@@ -3,10 +3,12 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
 
-import authRoutes from "./routes/auth.js";
-import analyticsRoutes from "./routes/analytics.js";
 
 dotenv.config();
+console.log("JWT_SECRET Loaded:", process.env.JWT_SECRET);
+
+import authRoutes from "./routes/auth.js";
+import analyticsRoutes from "./routes/analytics.js";
 
 const app = express();
 const PORT = process.env.PORT || 5050;

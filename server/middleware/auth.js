@@ -1,9 +1,9 @@
 // middleware/auth.js
+import { JWT_SECRETS } from "../config/env.js";
 import jwt from "jsonwebtoken";
 
-const JWT_SECRET = process.env.JWT_SECRET || "your_super_secret_key";
+const JWT_SECRET = process.env.JWT_SECRET;
 
-// ✅ Middleware to verify JWT token
 export const verifyToken = (req, res, next) => {
   const authHeader = req.headers.authorization;
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
@@ -14,14 +14,14 @@ export const verifyToken = (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
-    req.user = decoded; // includes id and role
+    req.user = decoded;
     next();
   } catch (err) {
+    console.error("JWT ERROR:", err.message);
     return res.status(401).json({ msg: "Invalid or expired token" });
   }
 };
-
-// ✅ Middleware to allow only admins
+console.log("JWT_SECRET Loaded:", process.env.JWT_SECRET);
 export const requireAdmin = (req, res, next) => {
   if (req.user?.role !== "admin") {
     return res.status(403).json({ msg: "Access denied. Admins only." });
