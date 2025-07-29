@@ -1,63 +1,72 @@
-🧠 AI-Powered Analytics Dashboard
-A modern, full-stack AI Analytics Dashboard built using React, Chart.js, Tailwind CSS, Node.js, and MongoDB. It features secure authentication, Admin dashboards, and protected analytics endpoints with real-time chart rendering.
+# 🧠 AI-Powered Analytics Dashboard
 
-🚀 Live Demo
-Click here to view
+A sleek, full-stack AI-powered analytics dashboard built using **React**, **Tailwind CSS**, **Chart.js**, **Node.js**, and **MongoDB Atlas**. It features **JWT-authenticated login**, **role-based access control**, and **admin-only analytics endpoints**—all visualized using interactive charts for real-time insights.
 
-🧠 AI Tools Used
-ChatGPT – UI/Backend code generation and troubleshooting
+## 🌐 Live Demo
+🔗 [Click here to view the live demo](https://your-live-link.com)  
+*(Replace with your actual Vercel frontend deployment URL)*
 
-GitHub Copilot
+---
 
-Figma AI – (If used for any UI inspiration)
+## 🧠 AI Tools Used
 
-📦 Tech Stack
-Frontend: React (Vite), Tailwind CSS, Chart.js, Axios
+| Tool | Purpose |
+|------|---------|
+| **ChatGPT** | Generated reusable UI components, backend logic, prompts & bug fixes |
+| **GitHub Copilot** | Assisted with boilerplate code and auto-completions |
+| *(Optional)* Figma AI | UI wireframe inspiration and layout planning |
 
-Backend: Node.js, Express.js, MongoDB Atlas
+---
 
-Deployment: Vercel (Frontend), Render (Backend)
+## 💻 Tech Stack
 
-📊 Features
-🔐 Secure Login/Signup (JWT Auth)
+### 🔹 Frontend
+- [React (Vite)](https://vitejs.dev/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Chart.js](https://www.chartjs.org/)
+- [Axios](https://axios-http.com/)
 
-📈 Real-Time Analytics Charts:
+### 🔹 Backend
+- [Node.js](https://nodejs.org/)
+- [Express.js](https://expressjs.com/)
+- [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
+- [JWT Authentication](https://jwt.io/)
 
-Inventory Utilization
+### 🔹 Deployment
+- Frontend: [Vercel](https://vercel.com/)
+- Backend: [Render](https://render.com/)
 
-Campaign Engagement
+---
 
-Channel ROI
+## 📊 Key Features
 
-Viewability Fraud
+- 🔐 **Secure Authentication** – Signup/Login with JWT tokens
+- 👤 **Admin/User Role-Based Access** – Protected analytics routes
+- 📈 **Real-Time Analytics Dashboard**:
+  - 📦 Inventory Utilization
+  - 📣 Campaign Engagement
+  - 💰 Channel ROI
+  - 🕵️ Viewability Fraud
+  - 📊 CTR vs Budget
 
-CTR vs Budget
+- 📱 **Responsive Layout** – Mobile-friendly and modern UI
+- 💡 **AI-Powered Development Workflow** – Built efficiently using AI tools
 
+---
 
+## ⚙️ Installation & Local Setup
 
-📱 Fully Responsive Layout
-
-🛠️ Installation & Run Locally
-bash
-Copy
-Edit
-# Clone the repo
+```bash
+# 1. Clone the repository
 git clone https://github.com/karannchaudhari04/ai-dashboard.git
 cd ai-dashboard
 
-# Frontend
+# 2. Start Frontend
 cd client
 npm install
 npm run dev
 
-# Backend
+# 3. Start Backend (in another terminal)
 cd ../server
 npm install
 npm run dev
-
-
-
-✅ Deployment Instructions
-Frontend: Deploy /frontend on Vercel
-
-Backend: Deploy /backend on Render
