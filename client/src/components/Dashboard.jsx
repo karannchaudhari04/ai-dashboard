@@ -1,11 +1,11 @@
 import Layout from "./Layout";
 
-import Chart1 from "../components/charts/SessionDurationChart";
-import Chart2 from "../components/charts/UserRetentionChart";
-import Chart3 from "../components/charts/TopFeaturesChart";
-import Chart4 from "../components/charts/APIErrorChart";
-import Chart5 from "../components/charts/UserGeoChart";
-import Chart6 from "../components/charts/LineChart";
+import Chart1 from "./Charts/InventoryUtilization";
+import Chart2 from "./Charts/CampaignEngagement";
+import Chart3 from "./Charts/ChannelROI";
+import Chart4 from "./Charts/ViewabilityFraud";
+// import Chart5 from "../components/charts/UserGeoChart";
+// import Chart6 from "../components/charts/LineChart";
 
 export default function Dashboard() {
   return (
@@ -33,13 +33,13 @@ export default function Dashboard() {
             <Chart4 />
           </div>
 
-          {/* Full-Width Rows */}
+          {/* Full-Width Rows
           <div className="md:col-span-2 bg-[#1e293b] rounded-2xl p-4 shadow-lg">
             <Chart5 />
           </div>
           <div className="md:col-span-2 bg-[#1e293b] rounded-2xl p-4 shadow-lg">
             <Chart6 />
-          </div>
+          </div> */}
         </div>
       </main>
     </Layout>
