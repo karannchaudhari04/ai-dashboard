@@ -28,7 +28,19 @@ const CampaignCTRvsBudgetChart = () => {
           <p className="text-sm text-gray-500 mb-4">
             CTR performance against allocated budget for each campaign.
           </p>
-          <Line data={chartData}/>
+          <div className="relative w-full h-[250px] sm:h-[300px]">
+        <Line
+          data={chartData}
+          options={{
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { position: "bottom", labels: { color: "#6b7280" } },
+              title: { display: false },
+            },
+          }}
+        />
+      </div>
         </div>
   );
 };
