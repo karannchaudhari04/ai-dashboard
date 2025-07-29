@@ -21,9 +21,14 @@ const InventoryUtilizationChart = () => {
   if (!chartData) return <div>Loading...</div>;
 
   return (
-    <div className="bg-white p-4 rounded-xl shadow-md">
-      <h2 className="text-lg font-semibold mb-2">Ad Inventory Utilization</h2>
-      <Bar data={chartData} />
+    <div className="bg-white p-4 rounded-2xl shadow-md w-full h-full">
+      <h2 className="text-xl font-semibold text-gray-800 mb-1">
+        Ad Inventory Utilization
+      </h2>
+      <p className="text-sm text-gray-500 mb-4">
+        Percentage utilization of various advertising channels.
+      </p>
+      <Bar data={chartData}/>
     </div>
   );
 };

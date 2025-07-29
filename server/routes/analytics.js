@@ -101,4 +101,55 @@ router.get("/viewability-fraud", verifyToken, requireAdmin, async (req, res) => 
   }
 });
 
+/**
+ * @route GET /api/analytics/active-user-regions
+ * @desc Get Active User Distribution by Region
+ */
+router.get("/active-user-regions", verifyToken, requireAdmin, async (req, res) => {
+  try {
+    const chartData = {
+      labels: ["North", "South", "East", "West", "Central"],
+      datasets: [
+        {
+          label: "Active Users",
+          data: [3200, 4100, 2300, 3700, 2900],
+          backgroundColor: ["#3B82F6", "#10B981", "#F59E0B", "#EF4444", "#6366F1"],
+        },
+      ],
+    };
+    res.status(200).json({ chartData, options: {} });
+  } catch (error) {
+    console.error("Active User Regions Error:", error.message);
+    res.status(500).json({ error: "Failed to fetch regional user data" });
+  }
+});
+
+/**
+ * @route GET /api/analytics/campaign-ctr-vs-budget
+ * @desc Get Campaign CTR vs Budget
+ */
+router.get("/campaign-ctr-vs-budget", verifyToken, requireAdmin, async (req, res) => {
+  try {
+    const chartData = {
+      labels: ["Campaign X", "Campaign Y", "Campaign Z"],
+      datasets: [
+        {
+          label: "CTR (%)",
+          data: [2.4, 3.1, 1.8],
+          backgroundColor: "#4F46E5",
+        },
+        {
+          label: "Budget (₹ in thousands)",
+          data: [150, 200, 100],
+          backgroundColor: "#10B981",
+        },
+      ],
+    };
+    res.status(200).json({ chartData, options: { responsive: true, barPercentage: 0.6 } });
+  } catch (error) {
+    console.error("CTR vs Budget Error:", error.message);
+    res.status(500).json({ error: "Failed to fetch campaign CTR vs budget data" });
+  }
+});
+
 export default router;

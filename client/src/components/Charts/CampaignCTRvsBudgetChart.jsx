@@ -1,18 +1,18 @@
-// components/APIErrorChart.jsx
+// components/Charts/CampaignCTRvsBudgetChart.jsx
 import { useEffect, useState } from "react";
-import { Pie } from "react-chartjs-2";
+import { Line } from "react-chartjs-2";
 import axios from "../../utils/axiosInstance";
 
-const ViewabilityFraudChart = () => {
+const CampaignCTRvsBudgetChart = () => {
   const [chartData, setChartData] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get("/analytics/viewability-fraud");
+        const res = await axios.get("/analytics/campaign-ctr-vs-budget");
         setChartData(res.data.chartData);
       } catch (err) {
-        console.error("Failed to fetch viewability data", err);
+        console.error("Failed to fetch CTR vs Budget data", err);
       }
     };
     fetchData();
@@ -28,9 +28,9 @@ const ViewabilityFraudChart = () => {
           <p className="text-sm text-gray-500 mb-4">
             Percentage utilization of various advertising channels.
           </p>
-          <Pie data={chartData}/>
+          <Line data={chartData}/>
         </div>
   );
 };
 
-export default ViewabilityFraudChart;
+export default CampaignCTRvsBudgetChart;

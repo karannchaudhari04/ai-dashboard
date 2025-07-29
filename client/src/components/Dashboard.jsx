@@ -4,8 +4,8 @@ import Chart1 from "./Charts/InventoryUtilization";
 import Chart2 from "./Charts/CampaignEngagement";
 import Chart3 from "./Charts/ChannelROI";
 import Chart4 from "./Charts/ViewabilityFraud";
-// import Chart5 from "../components/charts/UserGeoChart";
-// import Chart6 from "../components/charts/LineChart";
+import Chart5 from "./Charts/CampaignCTRvsBudgetChart";
+import Chart6 from "./Charts/ActiveUserRegionsChart";
 
 export default function Dashboard() {
   return (
@@ -32,14 +32,13 @@ export default function Dashboard() {
           <div className="bg-[#1e293b] rounded-2xl p-4 shadow-lg">
             <Chart4 />
           </div>
-
-          {/* Full-Width Rows
-          <div className="md:col-span-2 bg-[#1e293b] rounded-2xl p-4 shadow-lg">
+          {/* Row 3 */}
+          <div className="bg-[#1e293b] rounded-2xl p-4 shadow-lg">
             <Chart5 />
           </div>
-          <div className="md:col-span-2 bg-[#1e293b] rounded-2xl p-4 shadow-lg">
+          <div className="bg-[#1e293b] rounded-2xl p-4 shadow-lg">
             <Chart6 />
-          </div> */}
+          </div>
         </div>
       </main>
     </Layout>

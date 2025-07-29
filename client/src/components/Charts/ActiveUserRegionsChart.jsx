@@ -1,18 +1,18 @@
-// components/APIErrorChart.jsx
+// components/Charts/ActiveUserRegionsChart.jsx
 import { useEffect, useState } from "react";
-import { Pie } from "react-chartjs-2";
+import { Doughnut } from "react-chartjs-2";
 import axios from "../../utils/axiosInstance";
 
-const ViewabilityFraudChart = () => {
+const ActiveUserRegionsChart = () => {
   const [chartData, setChartData] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get("/analytics/viewability-fraud");
+        const res = await axios.get("/analytics/active-user-regions");
         setChartData(res.data.chartData);
       } catch (err) {
-        console.error("Failed to fetch viewability data", err);
+        console.error("Failed to fetch region data", err);
       }
     };
     fetchData();
@@ -28,9 +28,9 @@ const ViewabilityFraudChart = () => {
           <p className="text-sm text-gray-500 mb-4">
             Percentage utilization of various advertising channels.
           </p>
-          <Pie data={chartData}/>
+          <Doughnut data={chartData}/>
         </div>
   );
 };
 
-export default ViewabilityFraudChart;
+export default ActiveUserRegionsChart;
