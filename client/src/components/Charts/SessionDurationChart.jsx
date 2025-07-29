@@ -7,12 +7,16 @@ const SessionDurationChart = () => {
   const [error, setError] = useState(false); // new state
 
   useEffect(() => {
-    API.get("/analytics/session-duration")
-      .then((res) => setData(res.data))
-      .catch((err) => {
-        console.error("Chart error:", err?.response || err);
-        setError(true); // just show error in chart, no logout
-      });
+   API.get("/analytics/session-duration")
+  .then((res) => {
+    console.log("✅ Chart response:", res.data);
+    setData(res.data);
+  })
+  .catch((err) => {
+    console.error("❌ Chart error:", err?.response || err);
+    setError(true);
+  });
+
   }, []);
 
   if (error) return <div className="text-red-500">⚠️ Failed to load chart</div>;
