@@ -29,7 +29,7 @@ import authRoutes from "./routes/auth.js";
 import analyticsRoutes from "./routes/analytics.js";
 
 app.use("/api/auth", authRoutes);
-app.use("/analytics", analyticsRoutes); // ⬅️ Your analytics charts routes must exist here
+app.use("/api/analytics", analyticsRoutes); // ⬅️ Your analytics charts routes must exist here
 
 // 7. Connect to MongoDB and start the server
 const PORT = process.env.PORT || 5050;
