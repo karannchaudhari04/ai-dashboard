@@ -32,7 +32,6 @@ A sleek, full-stack AI-powered analytics dashboard built using **React**, **Tail
 - [Express.js](https://expressjs.com/)
 - [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
 - [JWT Authentication](https://jwt.io/)
-- Role-based Access Control (RBAC)
 
 ### 🔹 Deployment
 - Frontend: [Vercel](https://vercel.com/)
@@ -50,7 +49,6 @@ A sleek, full-stack AI-powered analytics dashboard built using **React**, **Tail
   - 💰 Channel ROI
   - 🕵️ Viewability Fraud
   - 📊 CTR vs Budget (×2)
-- 📅 **Date Range Filters** – (Last 7 / 30 days / custom)
 - 📱 **Responsive Layout** – Mobile-friendly, minimal dark UI
 - ⚙️ **Axios Interceptors** – Auto logout on token expiry (401)
 
