@@ -3,13 +3,16 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { logoutUser } from "../utils/logout";
-import useUserStore from "../store/useAuthStore";
+import useAuthStore from "../store/useAuthStore"; // ✅ renamed to match your Zustand store
 
 const Header = ({ setSidebarOpen }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const navigate = useNavigate();
 
-  const { user } = useUserStore();
+  // ✅ Get user from Zustand store
+  const { user } = useAuthStore();
+
+  // ✅ Use fallback values in case user or fields are not defined
   const userName = user?.name || "Admin";
   const userRole = user?.role || "admin";
 
@@ -17,6 +20,13 @@ const Header = ({ setSidebarOpen }) => {
     setDropdownOpen(false);
     navigate("/profile");
   };
+
+
+  const handleSettingClick = () => {
+    setDropdownOpen(false);
+    navigate("../pages/settings");
+  };
+
 
   return (
     <header className="bg-gray-900 px-6 py-3 flex justify-between items-center sticky top-0 z-30 shadow-md">
@@ -60,7 +70,7 @@ const Header = ({ setSidebarOpen }) => {
 
             <button
               className="w-full text-left px-4 py-2 hover:bg-gray-700 text-white flex items-center gap-2"
-              onClick={() => setDropdownOpen(false)}
+              onClick={handleSettingClick}
             >
               <Settings size={16} /> Settings
             </button>

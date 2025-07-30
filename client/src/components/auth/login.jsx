@@ -2,12 +2,15 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import API from "../../utils/axiosInstance"; // ✅ your custom axios instance
+import API from "../../utils/axiosInstance";
+import useAuthStore from "../../store/useAuthStore"; // ✅ import Zustand store
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+
+  const setUser = useAuthStore((state) => state.setUser); // ✅ subscribe to setUser
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -18,7 +21,11 @@ const Login = () => {
         password,
       });
 
-      localStorage.setItem("token", res.data.token); // Save token
+      // ✅ Save token
+      localStorage.setItem("token", res.data.token);
+
+      // ✅ Update Zustand store with logged-in user
+      setUser(res.data.user);
 
       toast.success("Login successful!", {
         autoClose: 1000,
@@ -27,7 +34,7 @@ const Login = () => {
 
       setTimeout(() => {
         navigate("/dashboard");
-      }, 1000); // wait for toast
+      }, 1000);
     } catch (err) {
       const errorMsg =
         err.response?.data?.message || "Login failed. Please try again.";
