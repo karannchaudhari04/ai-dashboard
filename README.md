@@ -1,6 +1,6 @@
 # 🧠 AI-Powered Analytics Dashboard
 
-A sleek, full-stack AI-powered analytics dashboard built using **React**, **Tailwind CSS**, **Chart.js**, **Node.js**, and **MongoDB Atlas**. It features **JWT-authenticated login**, **Admin access control**, and **admin-only analytics endpoints**—all visualized using interactive charts for real-time insights.
+A sleek, full-stack AI-powered analytics dashboard built using **React**, **Tailwind CSS**, **Chart.js**, **Node.js**, and **MongoDB Atlas**. It features **JWT-authenticated login**, **admin/user role-based access control**, and **real-time data visualization** using dynamic charts.
 
 ## 🌐 Live Demo
 🔗 [Click here to view the live demo](https://ai-dashboard-nine-topaz.vercel.app/)  
@@ -11,9 +11,10 @@ A sleek, full-stack AI-powered analytics dashboard built using **React**, **Tail
 
 | Tool | Purpose |
 |------|---------|
-| **ChatGPT** | Generated reusable UI components, backend logic, prompts & bug fixes |
-| **GitHub Copilot** | Assisted with boilerplate code and auto-completions |
-| **Figma AI** | UI wireframe inspiration and layout planning |
+| **ChatGPT (GPT-4)** | Core assistant for backend logic, JWT role-based auth, UI components, and bug fixes |
+| **GitHub Copilot** | Accelerated development with code suggestions and boilerplate generation |
+| **Figma / Dribbble / v0.dev** | UI design inspiration for layout, color schemes, and responsive structure |
+| **Cursor IDE** | AI-powered coding experience with smart JSX suggestions and debugging |
 
 ---
 
@@ -24,12 +25,14 @@ A sleek, full-stack AI-powered analytics dashboard built using **React**, **Tail
 - [Tailwind CSS](https://tailwindcss.com/)
 - [Chart.js](https://www.chartjs.org/)
 - [Axios](https://axios-http.com/)
+- Zustand (for state management)
 
 ### 🔹 Backend
 - [Node.js](https://nodejs.org/)
 - [Express.js](https://expressjs.com/)
 - [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
 - [JWT Authentication](https://jwt.io/)
+- Role-based Access Control (RBAC)
 
 ### 🔹 Deployment
 - Frontend: [Vercel](https://vercel.com/)
@@ -40,16 +43,16 @@ A sleek, full-stack AI-powered analytics dashboard built using **React**, **Tail
 ## 📊 Key Features
 
 - 🔐 **Secure Authentication** – Signup/Login with JWT tokens
-- 👤 **Admin Access** – Protected analytics routes
-- 📈 **Real-Time Analytics Dashboard**:
+- 👥 **Role-Based Access** – Admin-only protected analytics routes
+- 📈 **Real-Time Analytics Dashboard** – Simulated using `setInterval()` with mock API data
   - 📦 Inventory Utilization
   - 📣 Campaign Engagement
   - 💰 Channel ROI
   - 🕵️ Viewability Fraud
-  - 📊 CTR vs Budget
-
-- 📱 **Responsive Layout** – Mobile-friendly and modern UI
-- 💡 **AI-Powered Development Workflow** – Built efficiently using AI tools
+  - 📊 CTR vs Budget (×2)
+- 📅 **Date Range Filters** – (Last 7 / 30 days / custom)
+- 📱 **Responsive Layout** – Mobile-friendly, minimal dark UI
+- ⚙️ **Axios Interceptors** – Auto logout on token expiry (401)
 
 ---
 
