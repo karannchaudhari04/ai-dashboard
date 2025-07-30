@@ -1,4 +1,3 @@
-// components/Charts/ActiveUserRegionsChart.jsx
 import { useEffect, useState } from "react";
 import { Doughnut } from "react-chartjs-2";
 import axios from "../../utils/axiosInstance";
@@ -15,20 +14,25 @@ const ActiveUserRegionsChart = () => {
         console.error("Failed to fetch region data", err);
       }
     };
-    fetchData();
+
+    fetchData(); // initial fetch
+
+    const intervalId = setInterval(fetchData, 10000); // fetch every 10s
+
+    return () => clearInterval(intervalId); // cleanup on unmount
   }, []);
 
   if (!chartData) return <div>Loading...</div>;
 
   return (
     <div className="bg-white p-4 rounded-2xl shadow-md w-full h-full">
-          <h2 className="text-xl font-semibold text-gray-800 mb-1">
-            Active User Regions
-          </h2>
-          <p className="text-sm text-gray-500 mb-4">
-            Heatmap of top regions with the most active users.
-          </p>
-          <div className="relative w-full h-[250px] sm:h-[300px]">
+      <h2 className="text-xl font-semibold text-gray-800 mb-1">
+        Active User Regions
+      </h2>
+      <p className="text-sm text-gray-500 mb-4">
+        Heatmap of top regions with the most active users.
+      </p>
+      <div className="relative w-full h-[250px] sm:h-[300px]">
         <Doughnut
           data={chartData}
           options={{
@@ -41,7 +45,7 @@ const ActiveUserRegionsChart = () => {
           }}
         />
       </div>
-        </div>
+    </div>
   );
 };
 

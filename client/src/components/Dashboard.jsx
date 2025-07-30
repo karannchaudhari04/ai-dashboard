@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import Layout from "./Layout";
 
 import Chart1 from "./Charts/InventoryUtilization";
@@ -8,6 +9,16 @@ import Chart5 from "./Charts/CampaignCTRvsBudgetChart";
 import Chart6 from "./Charts/ActiveUserRegionsChart";
 
 export default function Dashboard() {
+  const [timestamp, setTimestamp] = useState(Date.now());
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTimestamp(Date.now());
+    }, 10000); // update every 10 seconds
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <Layout>
       {/* Page Content */}
@@ -19,25 +30,26 @@ export default function Dashboard() {
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-6">
           {/* Row 1 */}
           <div className="bg-[#1e293b] rounded-2xl p-4 shadow-lg">
-            <Chart1 />
+            <Chart1 timestamp={timestamp} />
           </div>
           <div className="bg-[#1e293b] rounded-2xl p-4 shadow-lg">
-            <Chart2 />
+            <Chart2 timestamp={timestamp} />
           </div>
 
           {/* Row 2 */}
           <div className="bg-[#1e293b] rounded-2xl p-4 shadow-lg">
-            <Chart3 />
+            <Chart3 timestamp={timestamp} />
           </div>
           <div className="bg-[#1e293b] rounded-2xl p-4 shadow-lg">
-            <Chart4 />
+            <Chart4 timestamp={timestamp} />
           </div>
+
           {/* Row 3 */}
           <div className="bg-[#1e293b] rounded-2xl p-4 shadow-lg">
-            <Chart5 />
+            <Chart5 timestamp={timestamp} />
           </div>
           <div className="bg-[#1e293b] rounded-2xl p-4 shadow-lg">
-            <Chart6 />
+            <Chart6 timestamp={timestamp} />
           </div>
         </div>
       </main>

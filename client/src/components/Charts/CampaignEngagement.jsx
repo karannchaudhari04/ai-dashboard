@@ -1,4 +1,3 @@
-// components/UserRetentionChart.jsx
 import { useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
 import axios from "../../utils/axiosInstance";
@@ -6,16 +5,20 @@ import axios from "../../utils/axiosInstance";
 const CampaignEngagementChart = () => {
   const [chartData, setChartData] = useState(null);
 
+  const fetchData = async () => {
+    try {
+      const res = await axios.get("/analytics/campaign-engagement");
+      setChartData(res.data.chartData);
+    } catch (err) {
+      console.error("Failed to fetch campaign engagement data", err);
+    }
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await axios.get("/analytics/campaign-engagement");
-        setChartData(res.data.chartData);
-      } catch (err) {
-        console.error("Failed to fetch campaign engagement data", err);
-      }
-    };
-    fetchData();
+    fetchData(); // initial fetch
+    const interval = setInterval(fetchData, 10000); // every 10s
+
+    return () => clearInterval(interval); // cleanup
   }, []);
 
   if (!chartData) return <div>Loading...</div>;

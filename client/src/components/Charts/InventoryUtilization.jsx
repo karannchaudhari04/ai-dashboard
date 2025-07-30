@@ -1,4 +1,3 @@
-// components/SessionDurationChart.jsx
 import { useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
 import axios from "../../utils/axiosInstance";
@@ -6,16 +5,20 @@ import axios from "../../utils/axiosInstance";
 const InventoryUtilizationChart = () => {
   const [chartData, setChartData] = useState(null);
 
+  const fetchData = async () => {
+    try {
+      const res = await axios.get("/analytics/inventory-utilization");
+      setChartData(res.data.chartData);
+    } catch (err) {
+      console.error("Failed to fetch inventory data", err);
+    }
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await axios.get("/analytics/inventory-utilization");
-        setChartData(res.data.chartData);
-      } catch (err) {
-        console.error("Failed to fetch inventory data", err);
-      }
-    };
-    fetchData();
+    fetchData(); // Initial fetch
+    const interval = setInterval(fetchData, 10000); // Refresh every 10s
+
+    return () => clearInterval(interval); // Cleanup on unmount
   }, []);
 
   if (!chartData) return <div>Loading...</div>;

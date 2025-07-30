@@ -1,9 +1,8 @@
 // src/pages/Analytics.jsx
+import { useEffect, useState } from "react";
 import Navbar from "../components/Header";
 import Sidebar from "../components/Sidebar";
-import { useState } from "react";
 import exportToPDF from "../utils/exportToPDF";
-
 import {
   InventoryChart,
   EngagementChart,
@@ -15,6 +14,30 @@ import {
 const Analytics = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
+  // Initial dummy data generator
+  const generateChartData = () =>
+    Array.from({ length: 7 }, () => Math.floor(Math.random() * 1000));
+
+  // States for each chart
+  const [inventoryData, setInventoryData] = useState(generateChartData());
+  const [engagementData, setEngagementData] = useState(generateChartData());
+  const [roiData, setRoiData] = useState(generateChartData());
+  const [fraudData, setFraudData] = useState(generateChartData());
+  const [ctrBudgetData, setCtrBudgetData] = useState(generateChartData());
+
+  // Simulate updates every 10 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setInventoryData(generateChartData());
+      setEngagementData(generateChartData());
+      setRoiData(generateChartData());
+      setFraudData(generateChartData());
+      setCtrBudgetData(generateChartData());
+    }, 10000); // <-- 10 seconds
+
+    return () => clearInterval(interval);
+  }, []);
+
   const handleExportAllCharts = () => {
     exportToPDF("all-charts-container", "AllCharts.pdf");
   };
@@ -25,7 +48,6 @@ const Analytics = () => {
       <div className="flex flex-col flex-1 overflow-hidden">
         <Navbar setSidebarOpen={setSidebarOpen} />
         <main className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8 bg-gray-900">
-          {/* Header with button */}
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-2xl sm:text-3xl font-semibold">
               Analytics Dashboard
@@ -44,19 +66,19 @@ const Analytics = () => {
             className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-2"
           >
             <div className="bg-white rounded-lg shadow p-4 dark:bg-gray-800">
-              <InventoryChart />
+              <InventoryChart data={inventoryData} />
             </div>
             <div className="bg-white rounded-lg shadow p-4 dark:bg-gray-800">
-              <EngagementChart />
+              <EngagementChart data={engagementData} />
             </div>
             <div className="bg-white rounded-lg shadow p-4 dark:bg-gray-800">
-              <ChannelROIChart />
+              <ChannelROIChart data={roiData} />
             </div>
             <div className="bg-white rounded-lg shadow p-4 dark:bg-gray-800">
-              <ViewabilityFraudChart />
+              <ViewabilityFraudChart data={fraudData} />
             </div>
             <div className="bg-white rounded-lg shadow p-4 dark:bg-gray-800">
-              <CTRBudgetChart />
+              <CTRBudgetChart data={ctrBudgetData} />
             </div>
           </div>
         </main>

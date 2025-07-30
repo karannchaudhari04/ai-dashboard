@@ -1,4 +1,3 @@
-// components/TopFeaturesChart.jsx
 import { useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
 import axios from "../../utils/axiosInstance";
@@ -6,16 +5,20 @@ import axios from "../../utils/axiosInstance";
 const ChannelROIChart = () => {
   const [chartData, setChartData] = useState(null);
 
+  const fetchData = async () => {
+    try {
+      const res = await axios.get("/analytics/channel-roi");
+      setChartData(res.data.chartData);
+    } catch (err) {
+      console.error("Failed to fetch ROI data", err);
+    }
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await axios.get("/analytics/channel-roi");
-        setChartData(res.data.chartData);
-      } catch (err) {
-        console.error("Failed to fetch ROI data", err);
-      }
-    };
-    fetchData();
+    fetchData(); // Initial load
+    const interval = setInterval(fetchData, 10000); // Refresh every 10s
+
+    return () => clearInterval(interval); // Cleanup
   }, []);
 
   if (!chartData) return <div>Loading...</div>;
@@ -23,7 +26,7 @@ const ChannelROIChart = () => {
   return (
     <div className="bg-white p-4 rounded-2xl shadow-md w-full h-full">
       <h2 className="text-xl font-semibold text-gray-800 mb-1">
-       Channel-wise ROI
+        Channel-wise ROI
       </h2>
       <p className="text-sm text-gray-500 mb-4">
         Return on investment per marketing channel in ₹ per ₹ spent.

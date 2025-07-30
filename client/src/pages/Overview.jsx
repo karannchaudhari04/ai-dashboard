@@ -1,63 +1,75 @@
 // src/pages/Overview.jsx
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Header";
 import MetricCard from "../components/MetricCard";
 import exportToCSV from "../utils/exportToCSV";
 
-const Overview = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-
-  const metrics = [
+const generateRandomMetrics = () => {
+  return [
     {
       title: "Total Campaigns",
-      value: "152",
+      value: Math.floor(Math.random() * 200 + 50).toString(),
       description: "Active in last 30 days",
       color: "text-blue-400",
     },
     {
       title: "Ad Impressions",
-      value: "10.2M",
+      value: `${(Math.random() * 20 + 1).toFixed(1)}M`,
       description: "Total this month",
       color: "text-green-400",
     },
     {
       title: "Top Channel",
-      value: "Influencer",
+      value: ["Influencer", "Email", "Paid Ads", "Social"][Math.floor(Math.random() * 4)],
       description: "Highest ROI",
       color: "text-yellow-400",
     },
     {
       title: "Conversion Rate",
-      value: "15.7%",
+      value: `${(Math.random() * 30 + 5).toFixed(1)}%`,
       description: "From clicks to conversions",
       color: "text-teal-400",
     },
     {
       title: "Bounce Rate",
-      value: "18%",
+      value: `${(Math.random() * 30 + 5).toFixed(1)}%`,
       description: "Visitors leaving immediately",
       color: "text-red-400",
     },
     {
       title: "Revenue",
-      value: "$120.3K",
+      value: `$${(Math.random() * 200 + 20).toFixed(1)}K`,
       description: "Monthly revenue generated",
       color: "text-green-400",
     },
     {
       title: "Users",
-      value: "8,240",
+      value: Math.floor(Math.random() * 10000 + 2000).toString(),
       description: "Active users this month",
       color: "text-blue-400",
     },
     {
       title: "Growth",
-      value: "12.4%",
+      value: `${(Math.random() * 25 + 1).toFixed(1)}%`,
       description: "Month-over-month growth",
       color: "text-yellow-400",
     },
   ];
+};
+
+const Overview = () => {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [metrics, setMetrics] = useState(generateRandomMetrics());
+
+  // Real-time update every 10 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setMetrics(generateRandomMetrics());
+    }, 10000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div className="flex h-screen bg-gray-900 text-white">
