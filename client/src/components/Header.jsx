@@ -13,6 +13,11 @@ const Header = ({ setSidebarOpen }) => {
   const userName = user?.name || "Admin";
   const userRole = user?.role || "admin";
 
+  const handleProfileClick = () => {
+    setDropdownOpen(false);
+    navigate("/profile");
+  };
+
   return (
     <header className="bg-gray-900 px-6 py-3 flex justify-between items-center sticky top-0 z-30 shadow-md">
       {/* Left - Hamburger + Title */}
@@ -26,7 +31,7 @@ const Header = ({ setSidebarOpen }) => {
         <div className="text-xl font-semibold text-white">Dashboard</div>
       </div>
 
-      {/* Right - Profile */}
+      {/* Right - Profile Dropdown */}
       <div className="relative">
         <button
           className="flex items-center gap-3 focus:outline-none"
@@ -43,12 +48,12 @@ const Header = ({ setSidebarOpen }) => {
           </div>
         </button>
 
-        {/* Dropdown */}
+        {/* Dropdown Menu */}
         {dropdownOpen && (
           <div className="absolute right-0 mt-2 w-48 bg-gray-800 rounded-lg shadow-lg border border-gray-700 text-sm z-50">
             <button
               className="w-full text-left px-4 py-2 hover:bg-gray-700 text-white flex items-center gap-2"
-              onClick={() => setDropdownOpen(false)}
+              onClick={handleProfileClick}
             >
               <User size={16} /> Profile
             </button>

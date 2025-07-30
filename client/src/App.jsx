@@ -8,6 +8,7 @@ import Overview from "./pages/Overview"; // Example page, adjust as needed
 import Analytics from "./pages/Analytics"; // Example page, adjust as needed
 import Users from "./pages/Users"; // Example page, adjust as needed
 import Settings from "./pages/Settings"; // Example page, adjust as needed
+import Profile from "./pages/Profile"; // Profile page
 
 
 export default function App() {
@@ -50,6 +51,7 @@ export default function App() {
                 <Settings />
             }
           />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       </Router>
       <ToastContainer />

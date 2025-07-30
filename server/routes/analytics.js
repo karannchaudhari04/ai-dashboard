@@ -1,6 +1,6 @@
 // routes/analyticsRoutes.js
 import express from "express";
-import { verifyToken, requireAdmin } from "../middleware/auth.js";
+import { verifyToken, requireAdmin } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 

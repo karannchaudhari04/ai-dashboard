@@ -25,7 +25,7 @@ app.use(
 app.use(express.json());
 
 // 6. Import & use routes
-import authRoutes from "./routes/auth.js";
+import authRoutes from "./routes/authRoutes.js";
 import analyticsRoutes from "./routes/analytics.js";
 
 app.use("/api/auth", authRoutes);
@@ -48,3 +48,8 @@ mongoose
   .catch((error) => {
     console.error("❌ MongoDB connection failed:", error.message);
   });
+
+  mongoose.connection.once("open", () => {
+  console.log("✅ Connected to MongoDB:", mongoose.connection.name);
+});
+
