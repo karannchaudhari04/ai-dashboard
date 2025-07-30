@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import API from "@/utils/axiosInstance"; // ✅ Replaced axios import here
 
 import {
   Table,
@@ -27,16 +27,9 @@ const DataTable = ({ columns = defaultColumns }) => {
   const [totalPages, setTotalPages] = useState(1);
   const limit = 5;
 
-  const token = localStorage.getItem("token");
-
   const fetchUsers = async (page = 1) => {
     try {
-      const res = await axios.get(
-        `http://localhost:5050/api/users?page=${page}&limit=${limit}`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      const res = await API.get(`/users?page=${page}&limit=${limit}`);
       setData(res.data.users);
       setTotalPages(res.data.totalPages);
       setCurrentPage(res.data.currentPage);
@@ -57,17 +50,11 @@ const DataTable = ({ columns = defaultColumns }) => {
   const handleEditSave = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(
-        `http://localhost:5050/api/users/${editUser._id}`,
-        {
-          name: editUser.name,
-          email: editUser.email,
-          role: editUser.role,
-        },
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      await API.put(`/users/${editUser._id}`, {
+        name: editUser.name,
+        email: editUser.email,
+        role: editUser.role,
+      });
       await fetchUsers(currentPage);
       setEditUser(null);
     } catch (err) {
@@ -77,12 +64,7 @@ const DataTable = ({ columns = defaultColumns }) => {
 
   const handleDeleteConfirm = async () => {
     try {
-      await axios.delete(
-        `http://localhost:5050/api/users/${deleteUser._id}`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      await API.delete(`/users/${deleteUser._id}`);
       await fetchUsers(currentPage);
       setDeleteUser(null);
     } catch (err) {
