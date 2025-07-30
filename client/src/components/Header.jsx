@@ -68,13 +68,6 @@ const Header = ({ setSidebarOpen }) => {
               <User size={16} /> Profile
             </button>
 
-            <button
-              className="w-full text-left px-4 py-2 hover:bg-gray-700 text-white flex items-center gap-2"
-              onClick={handleSettingClick}
-            >
-              <Settings size={16} /> Settings
-            </button>
-
             <hr className="border-gray-600" />
 
             <button

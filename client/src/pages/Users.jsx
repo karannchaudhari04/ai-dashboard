@@ -1,22 +1,24 @@
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom"; // 👈 ADD THIS
 import Navbar from "../components/Header";
 import Sidebar from "../components/Sidebar";
 import DataTable from "../components/DataTable/data-table";
 import { columns } from "../components/DataTable/columns.jsx";
-import API from "../utils/axiosInstance"; // ✅ Import custom axios instance
+import API from "../utils/axiosInstance";
 
 const Users = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [editUser, setEditUser] = useState(null);
   const [deleteUser, setDeleteUser] = useState(null);
   const [users, setUsers] = useState([]);
+  const location = useLocation(); // 👈 ADD THIS
 
   const tableColumns = columns({ setEditUser, setDeleteUser });
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const res = await API.get("/users"); // ✅ Use axiosInstance (auto handles token)
+        const res = await API.get("/users");
         setUsers(res.data);
       } catch (err) {
         console.error("Failed to fetch users", err);
@@ -25,6 +27,11 @@ const Users = () => {
 
     fetchUsers();
   }, []);
+
+  // 👇 Automatically close sidebar on route change
+  useEffect(() => {
+    setSidebarOpen(false);
+  }, [location.pathname]);
 
   return (
     <div className="flex h-screen">

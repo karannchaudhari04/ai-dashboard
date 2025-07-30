@@ -3,6 +3,7 @@ import { useState } from "react";
 import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Header";
 import MetricCard from "../components/MetricCard";
+import exportToCSV from "../utils/exportToCSV";
 
 const Overview = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -38,25 +39,25 @@ const Overview = () => {
       description: "Visitors leaving immediately",
       color: "text-red-400",
     },
-  {
-    title: "Revenue",
-    value: "$120.3K",
-    description: "Monthly revenue generated",
-    color: "text-green-400",
-  },
-  {
-    title: "Users",
-    value: "8,240",
-    description: "Active users this month",
-    color: "text-blue-400",
-  },
-  {
-    title: "Growth",
-    value: "12.4%",
-    description: "Month-over-month growth",
-    color: "text-yellow-400",
-  },
-];
+    {
+      title: "Revenue",
+      value: "$120.3K",
+      description: "Monthly revenue generated",
+      color: "text-green-400",
+    },
+    {
+      title: "Users",
+      value: "8,240",
+      description: "Active users this month",
+      color: "text-blue-400",
+    },
+    {
+      title: "Growth",
+      value: "12.4%",
+      description: "Month-over-month growth",
+      color: "text-yellow-400",
+    },
+  ];
 
   return (
     <div className="flex h-screen bg-gray-900 text-white">
@@ -64,7 +65,17 @@ const Overview = () => {
       <div className="flex flex-col flex-1 overflow-hidden">
         <Navbar setSidebarOpen={setSidebarOpen} />
         <main className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8">
-          <h2 className="text-2xl sm:text-3xl font-semibold mb-6">Company Overview</h2>
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-2xl font-semibold">Company Overview</h2>
+            <div className="flex gap-4">
+              <button
+                onClick={() => exportToCSV(metrics, "metrics_data")}
+                className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg"
+              >
+                Export CSV
+              </button>
+            </div>
+          </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {metrics.map((metric, index) => (

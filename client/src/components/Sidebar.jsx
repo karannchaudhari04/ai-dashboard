@@ -3,6 +3,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { logoutUser } from "../utils/logout";
 
+
 const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
   const navigate = useNavigate();
 
@@ -11,7 +12,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
     { name: "Overview", icon: <BarChart2Icon/>, path: "/pages/overview" },
     { name: "Analytics", icon: <BarChart />, path: "/pages/analytics" },
     { name: "Users", icon: <Users />, path: "/pages/users" },
-    { name: "Settings", icon: <Settings />, path: "/pages/settings" },
   ];
 
   const linkClasses = ({ isActive }) =>

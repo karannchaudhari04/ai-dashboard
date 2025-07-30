@@ -1,10 +1,17 @@
 // src/pages/Settings.jsx
 import Navbar from "../components/Header";
 import Sidebar from "../components/Sidebar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom"; // ✅ Import
 
 const Settings = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const location = useLocation(); // ✅ Get route info
+
+  // ✅ Close sidebar automatically when route changes
+  useEffect(() => {
+    setSidebarOpen(false);
+  }, [location.pathname]);
 
   return (
     <div className="flex h-screen">

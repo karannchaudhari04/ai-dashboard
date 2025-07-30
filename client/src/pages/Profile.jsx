@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react"; // ⬅ add useState
 import Navbar from "../components/Header";
 import Sidebar from "../components/Sidebar";
 import API from "../utils/axiosInstance";
@@ -6,6 +6,7 @@ import useAuthStore from "../store/useAuthStore";
 
 const Profile = () => {
   const { user, setUser } = useAuthStore();
+  const [sidebarOpen, setSidebarOpen] = useState(false); // ⬅ add this
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -32,9 +33,9 @@ const Profile = () => {
 
   return (
     <div className="flex h-screen bg-gray-900 text-white">
-      <Sidebar />
+      <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} /> {/* pass props */}
       <div className="flex-1 flex flex-col overflow-hidden">
-        <Navbar />
+        <Navbar setSidebarOpen={setSidebarOpen} /> {/* pass toggle function */}
         <main className="p-6 overflow-y-auto">
           <h2 className="text-2xl font-bold mb-6">Admin Profile</h2>
 
