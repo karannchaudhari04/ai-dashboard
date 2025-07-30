@@ -1,19 +1,27 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import API from "../../utils/axiosInstance";
-import useAuthStore from "../../store/useAuthStore"; // ✅ import Zustand store
 import { Helmet } from "react-helmet";
+import API from "../../utils/axiosInstance";
+import useAuthStore from "../../store/useAuthStore";
 
-
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+  CardFooter,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const setUser = useAuthStore((state) => state.setUser); // ✅ subscribe to setUser
+  const setUser = useAuthStore((state) => state.setUser);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -24,10 +32,7 @@ const Login = () => {
         password,
       });
 
-      // ✅ Save token
       localStorage.setItem("token", res.data.token);
-
-      // ✅ Update Zustand store with logged-in user
       setUser(res.data.user);
 
       toast.success("Login successful!", {
@@ -50,44 +55,67 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-950 text-white flex items-center justify-center px-4">
-      <div className="bg-gray-900 p-8 rounded-md shadow-lg w-full max-w-md">
-        <h2 className="text-3xl font-semibold text-center mb-6">Login</h2>
-        <form onSubmit={handleLogin} className="space-y-4">
-          <input
-            type="email"
-            placeholder="Email"
-            className="w-full px-4 py-2 rounded-md bg-gray-800 border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            className="w-full px-4 py-2 rounded-md bg-gray-800 border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-          <button
-            type="submit"
-            className="w-full py-2 bg-purple-600 hover:bg-purple-700 transition rounded-md font-medium"
-          >
-            Login
-          </button>
-        </form>
-        <p className="text-sm mt-4 text-center text-gray-400">
-          Don’t have an account?{" "}
-          <span
-            className="text-purple-400 hover:underline cursor-pointer"
-            onClick={() => navigate("/signup")}
-          >
-            Sign up
-          </span>
-        </p>
+    <>
+      <Helmet>
+        <title>Login | AI Analytics</title>
+      </Helmet>
+
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950 px-4">
+        <Card className="w-full max-w-md bg-gray-900 border-gray-800 text-white shadow-lg">
+          <CardHeader>
+            <CardTitle className="text-3xl text-center font-semibold">
+              Welcome Back
+            </CardTitle>
+          </CardHeader>
+
+          <form onSubmit={handleLogin}>
+            <CardContent className="space-y-4">
+              <div className="mb-4">
+                <Label htmlFor="email" className="block text-sm font-medium mb-1">Email</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="you@example.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full px-4 py-2 bg-[#1a1c23] text-white border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  required
+                />
+              </div>
+
+              <div>
+                <Label htmlFor="password" className="block text-sm font-medium mb-1">Password</Label>
+                <Input
+                  id="password"
+                  type="password"
+                  placeholder="••••••••"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full px-4 py-2 bg-[#1a1c23] text-white border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  required
+                />
+              </div>
+            </CardContent>
+
+            <CardFooter className="flex flex-col gap-3">
+              <Button type="submit" className="w-full py-2 px-4 bg-gradient-to-r from-gray-800 to-black text-white rounded-md hover:opacity-90">
+                Login
+              </Button>
+
+              <p className="mt-4 text-center text-sm text-gray-400">
+                Don’t have an account?{" "}
+                <span
+                  onClick={() => navigate("/signup")}
+                  className="text-purple-400 hover:underline cursor-pointer"
+                >
+                  Sign up
+                </span>
+              </p>
+            </CardFooter>
+          </form>
+        </Card>
       </div>
-    </div>
+    </>
   );
 };
 
