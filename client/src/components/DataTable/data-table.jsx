@@ -22,15 +22,23 @@ const DataTable = ({ columns = defaultColumns }) => {
   const [data, setData] = useState([]);
   const [editUser, setEditUser] = useState(null);
   const [deleteUser, setDeleteUser] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const limit = 5;
 
   const token = localStorage.getItem("token");
 
-  const fetchUsers = async () => {
+  const fetchUsers = async (page = 1) => {
     try {
-      const res = await axios.get("http://localhost:5050/api/users", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setData(res.data);
+      const res = await axios.get(
+        `http://localhost:5050/api/users?page=${page}&limit=${limit}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      setData(res.data.users);
+      setTotalPages(res.data.totalPages);
+      setCurrentPage(res.data.currentPage);
     } catch (err) {
       console.error("Error fetching users:", err);
     }
@@ -59,7 +67,7 @@ const DataTable = ({ columns = defaultColumns }) => {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      await fetchUsers();
+      await fetchUsers(currentPage);
       setEditUser(null);
     } catch (err) {
       console.error("Failed to update user", err);
@@ -74,7 +82,7 @@ const DataTable = ({ columns = defaultColumns }) => {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      await fetchUsers();
+      await fetchUsers(currentPage);
       setDeleteUser(null);
     } catch (err) {
       console.error("Failed to delete user", err);
@@ -83,9 +91,13 @@ const DataTable = ({ columns = defaultColumns }) => {
 
   return (
     <>
-      <div className="overflow-x-auto rounded-lg border dark:bg-black dark:text-white">
+      <div className="overflow-x-auto rounded-lg border border-gray-700 bg-[#0f0f0f] text-white p-4">
+        <h2 className="text-xl font-semibold mb-4">
+          Manage registered users, update roles, and track activity
+        </h2>
+
         <Table>
-          <TableHeader>
+          <TableHeader className="bg-gray-900 text-white">
             <TableRow>
               {columns.map((column, index) => (
                 <TableHead key={index}>{column.header}</TableHead>
@@ -95,7 +107,10 @@ const DataTable = ({ columns = defaultColumns }) => {
           </TableHeader>
           <TableBody>
             {data.map((row) => (
-              <TableRow key={row._id}>
+              <TableRow
+                key={row._id}
+                className="hover:bg-gray-800 transition-all"
+              >
                 {columns.map((column, index) => (
                   <TableCell key={index}>{row[column.accessorKey]}</TableCell>
                 ))}
@@ -120,6 +135,27 @@ const DataTable = ({ columns = defaultColumns }) => {
             ))}
           </TableBody>
         </Table>
+
+        {/* Pagination Controls */}
+        <div className="flex justify-between items-center mt-6">
+          <Button
+            disabled={currentPage === 1}
+            onClick={() => fetchUsers(currentPage - 1)}
+            className="bg-gray-800 text-white disabled:opacity-50"
+          >
+            Prev
+          </Button>
+          <span className="text-white text-sm">
+            Page {currentPage} of {totalPages}
+          </span>
+          <Button
+            disabled={currentPage === totalPages}
+            onClick={() => fetchUsers(currentPage + 1)}
+            className="bg-gray-800 text-white disabled:opacity-50"
+          >
+            Next
+          </Button>
+        </div>
       </div>
 
       {/* Edit Modal */}
@@ -129,7 +165,7 @@ const DataTable = ({ columns = defaultColumns }) => {
             <DialogTitle>Edit User</DialogTitle>
           </DialogHeader>
           {editUser && (
-            <form onSubmit={handleEditSave} className="flex flex-col gap-3">
+            <form onSubmit={handleEditSave} className="flex flex-col gap-3 mt-2">
               <Input
                 name="name"
                 value={editUser.name}
@@ -148,10 +184,7 @@ const DataTable = ({ columns = defaultColumns }) => {
                 onChange={handleEditChange}
                 placeholder="Role"
               />
-              <Button
-                type="submit"
-                className="bg-blue-600 hover:bg-blue-700"
-              >
+              <Button type="submit" className="bg-blue-600 hover:bg-blue-700">
                 Save
               </Button>
             </form>
@@ -165,8 +198,9 @@ const DataTable = ({ columns = defaultColumns }) => {
           <DialogHeader>
             <DialogTitle>Confirm Delete</DialogTitle>
           </DialogHeader>
-          <div className="text-white">
-            Are you sure you want to delete <strong>{deleteUser?.name}</strong>?
+          <div className="text-white mt-2">
+            Are you sure you want to delete{" "}
+            <strong>{deleteUser?.name}</strong>?
           </div>
           <div className="flex gap-2 mt-4">
             <Button variant="destructive" onClick={handleDeleteConfirm}>
