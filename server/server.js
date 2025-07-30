@@ -27,9 +27,11 @@ app.use(express.json());
 // 6. Import & use routes
 import authRoutes from "./routes/authRoutes.js";
 import analyticsRoutes from "./routes/analytics.js";
+import userRoutes from "./routes/userRoutes.js";
 
 app.use("/api/auth", authRoutes);
-app.use("/api/analytics", analyticsRoutes); // ⬅️ Your analytics charts routes must exist here
+app.use("/api/analytics", analyticsRoutes);
+app.use("/api/users", userRoutes);  // ⬅️ Your analytics charts routes must exist here
 
 // 7. Connect to MongoDB and start the server
 const PORT = process.env.PORT || 5050;
