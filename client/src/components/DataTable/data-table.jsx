@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import API from "@/utils/axiosInstance"; // ✅ Replaced axios import here
+import API from "@/utils/axiosInstance";
 
 import {
   Table,
@@ -74,67 +74,76 @@ const DataTable = ({ columns = defaultColumns }) => {
 
   return (
     <>
-      <div className="overflow-x-auto rounded-lg border border-gray-700 bg-[#0f0f0f] text-white p-4">
+      <div className="w-full p-4 rounded-lg border border-neutral-800 bg-black text-white">
         <h2 className="text-xl font-semibold mb-4">
           Manage registered users, update roles, and track activity
         </h2>
 
-        <Table>
-          <TableHeader className="bg-gray-900 text-white">
-            <TableRow>
-              {columns.map((column, index) => (
-                <TableHead key={index}>{column.header}</TableHead>
-              ))}
-              <TableHead>Actions</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {data.map((row) => (
-              <TableRow
-                key={row._id}
-                className="hover:bg-gray-800 transition-all"
-              >
+        {/* Responsive Table Wrapper */}
+        <div className="w-full overflow-x-auto">
+          <Table className="min-w-full table-auto">
+            <TableHeader className="bg-black text-white">
+              <TableRow>
                 {columns.map((column, index) => (
-                  <TableCell key={index}>{row[column.accessorKey]}</TableCell>
+                  <TableHead key={index} className="break-words whitespace-normal px-2 py-3 text-sm">
+                    {column.header}
+                  </TableHead>
                 ))}
-                <TableCell className="flex gap-2">
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    className="bg-gray-800 text-white hover:bg-gray-700"
-                    onClick={() => setEditUser(row)}
-                  >
-                    Edit
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant="destructive"
-                    onClick={() => setDeleteUser(row)}
-                  >
-                    Delete
-                  </Button>
-                </TableCell>
+                <TableHead className="break-words whitespace-normal px-2 py-3 text-sm">Actions</TableHead>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+            </TableHeader>
+            <TableBody>
+              {data.map((row) => (
+                <TableRow
+                  key={row._id}
+                  className="hover:bg-neutral-900 transition-colors"
+                >
+                  {columns.map((column, index) => (
+                    <TableCell
+                      key={index}
+                      className="break-words whitespace-normal px-2 py-2 text-sm max-w-[150px]"
+                    >
+                      {row[column.accessorKey]}
+                    </TableCell>
+                  ))}
+                  <TableCell className="flex flex-wrap gap-2 px-2 py-2">
+                    <Button
+                      size="sm"
+                      className="bg-blue-800 hover:bg-blue-700 text-white"
+                      onClick={() => setEditUser(row)}
+                    >
+                      Edit
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="destructive"
+                      onClick={() => setDeleteUser(row)}
+                    >
+                      Delete
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
 
-        {/* Pagination Controls */}
-        <div className="flex justify-between items-center mt-6">
+        {/* Pagination */}
+        <div className="flex flex-col sm:flex-row justify-between items-center mt-4 gap-3">
           <Button
             disabled={currentPage === 1}
             onClick={() => fetchUsers(currentPage - 1)}
-            className="bg-gray-800 text-white disabled:opacity-50"
+            className="bg-neutral-800 text-white disabled:opacity-40"
           >
             Prev
           </Button>
-          <span className="text-white text-sm">
+          <span className="text-sm text-white">
             Page {currentPage} of {totalPages}
           </span>
           <Button
             disabled={currentPage === totalPages}
             onClick={() => fetchUsers(currentPage + 1)}
-            className="bg-gray-800 text-white disabled:opacity-50"
+            className="bg-neutral-800 text-white disabled:opacity-40"
           >
             Next
           </Button>
@@ -143,7 +152,7 @@ const DataTable = ({ columns = defaultColumns }) => {
 
       {/* Edit Modal */}
       <Dialog open={!!editUser} onOpenChange={() => setEditUser(null)}>
-        <DialogContent className="!bg-gray-900 !text-white !border-gray-700">
+        <DialogContent className="!bg-black !text-white !border-neutral-800">
           <DialogHeader>
             <DialogTitle>Edit User</DialogTitle>
           </DialogHeader>
@@ -154,20 +163,23 @@ const DataTable = ({ columns = defaultColumns }) => {
                 value={editUser.name}
                 onChange={handleEditChange}
                 placeholder="Name"
+                className="bg-neutral-900 text-white border border-neutral-700"
               />
               <Input
                 name="email"
                 value={editUser.email}
                 onChange={handleEditChange}
                 placeholder="Email"
+                className="bg-neutral-900 text-white border border-neutral-700"
               />
               <Input
                 name="role"
                 value={editUser.role}
                 onChange={handleEditChange}
                 placeholder="Role"
+                className="bg-neutral-900 text-white border border-neutral-700"
               />
-              <Button type="submit" className="bg-blue-600 hover:bg-blue-700">
+              <Button type="submit" className="bg-blue-800 hover:bg-blue-700">
                 Save
               </Button>
             </form>
@@ -177,7 +189,7 @@ const DataTable = ({ columns = defaultColumns }) => {
 
       {/* Delete Modal */}
       <Dialog open={!!deleteUser} onOpenChange={() => setDeleteUser(null)}>
-        <DialogContent className="!bg-gray-900 !text-white !border-gray-700">
+        <DialogContent className="!bg-black !text-white !border-neutral-800">
           <DialogHeader>
             <DialogTitle>Confirm Delete</DialogTitle>
           </DialogHeader>
@@ -185,14 +197,14 @@ const DataTable = ({ columns = defaultColumns }) => {
             Are you sure you want to delete{" "}
             <strong>{deleteUser?.name}</strong>?
           </div>
-          <div className="flex gap-2 mt-4">
+          <div className="flex gap-3 mt-4">
             <Button variant="destructive" onClick={handleDeleteConfirm}>
               Delete
             </Button>
             <Button
               variant="outline"
               onClick={() => setDeleteUser(null)}
-              className="bg-gray-800 text-white hover:bg-gray-700"
+              className="bg-neutral-800 text-white hover:bg-neutral-700"
             >
               Cancel
             </Button>
