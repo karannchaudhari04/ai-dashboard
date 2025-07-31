@@ -79,17 +79,17 @@ const DataTable = ({ columns = defaultColumns }) => {
           Manage registered users, update roles, and track activity
         </h2>
 
-        {/* Responsive Table Wrapper */}
-        <div className="w-full overflow-x-auto">
-          <Table className="min-w-full table-auto">
+        {/* Desktop Table View */}
+        <div className="hidden md:block">
+          <Table className="w-full">
             <TableHeader className="bg-black text-white">
               <TableRow>
                 {columns.map((column, index) => (
-                  <TableHead key={index} className="break-words whitespace-normal px-2 py-3 text-sm">
+                  <TableHead key={index} className="px-2 py-3 text-sm">
                     {column.header}
                   </TableHead>
                 ))}
-                <TableHead className="break-words whitespace-normal px-2 py-3 text-sm">Actions</TableHead>
+                <TableHead className="px-2 py-3 text-sm">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -101,12 +101,12 @@ const DataTable = ({ columns = defaultColumns }) => {
                   {columns.map((column, index) => (
                     <TableCell
                       key={index}
-                      className="break-words whitespace-normal px-2 py-2 text-sm max-w-[150px]"
+                      className="px-2 py-2 text-sm"
                     >
                       {row[column.accessorKey]}
                     </TableCell>
                   ))}
-                  <TableCell className="flex flex-wrap gap-2 px-2 py-2">
+                  <TableCell className="flex gap-2 px-2 py-2">
                     <Button
                       size="sm"
                       className="bg-blue-800 hover:bg-blue-700 text-white"
@@ -128,22 +128,62 @@ const DataTable = ({ columns = defaultColumns }) => {
           </Table>
         </div>
 
+        {/* Mobile Card View */}
+        <div className="md:hidden space-y-3">
+          {data.map((row) => (
+            <div
+              key={row._id}
+              className="bg-neutral-900 rounded-lg p-4 border border-neutral-700"
+            >
+              <div className="space-y-2">
+                {columns.map((column, index) => (
+                  <div key={index} className="flex justify-between items-start">
+                    <span className="text-neutral-400 text-sm font-medium min-w-[80px]">
+                      {column.header}:
+                    </span>
+                    <span className="text-white text-sm text-right flex-1 break-words">
+                      {row[column.accessorKey]}
+                    </span>
+                  </div>
+                ))}
+              </div>
+              <div className="flex gap-2 mt-4 pt-3 border-t border-neutral-700">
+                <Button
+                  size="sm"
+                  className="bg-blue-800 hover:bg-blue-700 text-white flex-1"
+                  onClick={() => setEditUser(row)}
+                >
+                  Edit
+                </Button>
+                <Button
+                  size="sm"
+                  variant="destructive"
+                  className="flex-1"
+                  onClick={() => setDeleteUser(row)}
+                >
+                  Delete
+                </Button>
+              </div>
+            </div>
+          ))}
+        </div>
+
         {/* Pagination */}
-        <div className="flex flex-col sm:flex-row justify-between items-center mt-4 gap-3">
+        <div className="flex flex-col sm:flex-row justify-between items-center mt-6 gap-3">
           <Button
             disabled={currentPage === 1}
             onClick={() => fetchUsers(currentPage - 1)}
-            className="bg-neutral-800 text-white disabled:opacity-40"
+            className="bg-neutral-800 text-white disabled:opacity-40 w-full sm:w-auto"
           >
-            Prev
+            Previous
           </Button>
-          <span className="text-sm text-white">
+          <span className="text-sm text-white text-center">
             Page {currentPage} of {totalPages}
           </span>
           <Button
             disabled={currentPage === totalPages}
             onClick={() => fetchUsers(currentPage + 1)}
-            className="bg-neutral-800 text-white disabled:opacity-40"
+            className="bg-neutral-800 text-white disabled:opacity-40 w-full sm:w-auto"
           >
             Next
           </Button>
@@ -152,7 +192,7 @@ const DataTable = ({ columns = defaultColumns }) => {
 
       {/* Edit Modal */}
       <Dialog open={!!editUser} onOpenChange={() => setEditUser(null)}>
-        <DialogContent className="!bg-black !text-white !border-neutral-800">
+        <DialogContent className="!bg-black !text-white !border-neutral-800 max-w-md mx-4">
           <DialogHeader>
             <DialogTitle>Edit User</DialogTitle>
           </DialogHeader>
@@ -189,7 +229,7 @@ const DataTable = ({ columns = defaultColumns }) => {
 
       {/* Delete Modal */}
       <Dialog open={!!deleteUser} onOpenChange={() => setDeleteUser(null)}>
-        <DialogContent className="!bg-black !text-white !border-neutral-800">
+        <DialogContent className="!bg-black !text-white !border-neutral-800 max-w-md mx-4">
           <DialogHeader>
             <DialogTitle>Confirm Delete</DialogTitle>
           </DialogHeader>
@@ -198,13 +238,13 @@ const DataTable = ({ columns = defaultColumns }) => {
             <strong>{deleteUser?.name}</strong>?
           </div>
           <div className="flex gap-3 mt-4">
-            <Button variant="destructive" onClick={handleDeleteConfirm}>
+            <Button variant="destructive" onClick={handleDeleteConfirm} className="flex-1">
               Delete
             </Button>
             <Button
               variant="outline"
               onClick={() => setDeleteUser(null)}
-              className="bg-neutral-800 text-white hover:bg-neutral-700"
+              className="bg-neutral-800 text-white hover:bg-neutral-700 flex-1"
             >
               Cancel
             </Button>
