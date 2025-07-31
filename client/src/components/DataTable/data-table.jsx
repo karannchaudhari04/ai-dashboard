@@ -82,14 +82,19 @@ const DataTable = ({ columns = defaultColumns }) => {
         {/* Desktop Table View */}
         <div className="hidden md:block">
           <Table className="w-full">
-            <TableHeader className="bg-black text-white">
+            <TableHeader className="bg-black">
               <TableRow>
                 {columns.map((column, index) => (
-                  <TableHead key={index} className="px-2 py-3 text-sm">
+                  <TableHead
+                    key={index}
+                    className="px-2 py-3 text-base font-semibold text-white hover:bg-neutral-900 transition-colors cursor-pointer"
+                  >
                     {column.header}
                   </TableHead>
                 ))}
-                <TableHead className="px-2 py-3 text-sm">Actions</TableHead>
+                <TableHead className="px-2 py-3 text-base font-semibold text-white hover:bg-neutral-900 transition-colors cursor-pointer">
+                  Actions
+                </TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -133,7 +138,7 @@ const DataTable = ({ columns = defaultColumns }) => {
           {data.map((row) => (
             <div
               key={row._id}
-              className="bg-neutral-900 rounded-lg p-4 border border-neutral-700"
+              className="bg-neutral-900 rounded-lg p-4 border border-neutral-700 hover:bg-neutral-800 transition-colors cursor-pointer"
             >
               <div className="space-y-2">
                 {columns.map((column, index) => (
